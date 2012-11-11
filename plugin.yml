@@ -1,0 +1,7 @@
+## YAML Template.
+---
+name: Paypass
+version: 1.0
+main: me.Miny.Paypassage.Paypassage
+author: Miny
+website: http://www.miny.de.rs

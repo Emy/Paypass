@@ -1,0 +1,11 @@
+## YAML Template.
+---
+name: Paypass
+version: 1.0
+main: me.Miny.Paypassage.Paypass
+author: Miny
+website: http://www.miny.de.rs
+commands:
+  pp:
+    description: Paypass all
+    usage: /pp
