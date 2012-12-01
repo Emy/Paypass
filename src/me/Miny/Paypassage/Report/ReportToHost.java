@@ -9,7 +9,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import me.Miny.Paypassage.Paypass;
 import me.Miny.Paypassage.logger.LoggerUtility;
-import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
 public class ReportToHost {
     
