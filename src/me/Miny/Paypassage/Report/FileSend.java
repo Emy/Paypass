@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.logger.LoggerUtility;
 
 public class FileSend {
 
@@ -61,8 +62,8 @@ public class FileSend {
                         rd.close();
                     }
                 } catch (Exception e) {
-                    plugin.Logger("cannot send debugfile because the linking of some resources failed.", "Error");
-                    plugin.Logger("May you used /reload and therefore it doesnt work.", "Error");
+                    plugin.getLoggerUtility().log("cannot send debugfile because the linking of some resources failed.", LoggerUtility.Level.ERROR);
+                    plugin.getLoggerUtility().log("May you used /reload and therefore it doesnt work.", LoggerUtility.Level.ERROR);
                 }
             }
         }, 0L);

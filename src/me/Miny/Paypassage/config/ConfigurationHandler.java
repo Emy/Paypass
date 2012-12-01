@@ -2,6 +2,7 @@ package me.Miny.Paypassage.config;
 
 import me.Miny.Paypassage.Paypass;
 import me.Miny.Paypassage.logger.LoggerUtility;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
@@ -16,6 +17,14 @@ public class ConfigurationHandler {
 
     public ConfigurationHandler(Paypass plugin) {
         this.plugin = plugin;
+    }
+
+    public YamlConfiguration getLanguage_config() {
+        return language_config;
+    }
+    
+    public FileConfiguration getConfig(){
+        return plugin.getConfig();
     }
 
     public boolean onStart(){

@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.logger.LoggerUtility;
+import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
 public class ReportToHost {
     
@@ -67,11 +69,11 @@ public class ReportToHost {
             zeile = br.readLine();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            this.plugin.Logger("Exception: IOException! Exception on reading message!", "Error");
+            this.plugin.getLoggerUtility().log("Exception: IOException! Exception on reading message!", LoggerUtility.Level.ERROR);
             return "Exception on reading message!";
         } catch (Exception e) {
             e.printStackTrace();
-            this.plugin.Logger("Exception: Exception! Exception on reading message!", "");
+            this.plugin.getLoggerUtility().log("Exception: Exception! Exception on reading message!", LoggerUtility.Level.ERROR);
             return "Exception on reading message!";
         }
         return zeile;
@@ -108,66 +110,66 @@ public class ReportToHost {
         try {
             String temp = "[" + this.plugin.getName() + "] Sending issue report to ibhh.de!";
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] -------------------------";
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] Version: " + this.plugin.getDescription().getVersion();
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] ErrorID: " + line;
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] Gameversion: " + this.plugin.getServer().getBukkitVersion();
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] Other: " + other;
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] Message: " + message;
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             if (this.plugin.getConfig().getBoolean("debug")) {
                 temp = "[" + this.plugin.getName() + "] Stacktrace: " + stacktrace;
                 System.out.print(temp);
-                this.plugin.Loggerclass.log(temp);
+                this.plugin.getLoggerUtility().log(temp);
             }
             temp = "[" + this.plugin.getName() + "] Class: " + classfile;
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] -------------------------";
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] Message of Server: " + ret;
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             temp = "[" + this.plugin.getName() + "] -------------------------";
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
         } catch (Exception ex) {
             String temp = "[" + this.plugin.getName() + "] Couldnt send error report to ibhh.de!";
             System.out.print(temp);
-            this.plugin.Loggerclass.log(temp);
+            this.plugin.getLoggerUtility().log(temp);
             if (this.plugin.getConfig().getBoolean("debug")) {
                 ex.printStackTrace();
             }
         }
         if (this.plugin.getConfig().getBoolean("senddebugfile")) {
-            this.plugin.Logger("config == true", "Debug");
+            this.plugin.getLoggerUtility().log("config == true", LoggerUtility.Level.DEBUG);
             if (ret != null) {
-                this.plugin.Logger("ret != null", "Debug");
+                this.plugin.getLoggerUtility().log("ret != null", LoggerUtility.Level.DEBUG);
                 try {
                     String[] id_text = ret.split(":");
                     String id = id_text[1];
-                    this.plugin.Logger("ID: " + id, "Debug");
+                    this.plugin.getLoggerUtility().log("ID: " + id, LoggerUtility.Level.DEBUG);
                     try {
                         if (id != null) {
                             this.filesend.sendDebugFile(id);
-                            this.plugin.Logger("debugfile successfully sent, thanks!", "");
+                            this.plugin.getLoggerUtility().log("debugfile successfully sent, thanks!", LoggerUtility.Level.INFO);
                         }
                     } catch (Exception e1) {
-                        this.plugin.Logger("Could not send debugfile!", "Error");
-                        if (this.plugin.config.debug) {
+                        this.plugin.getLoggerUtility().log("Could not send debugfile!", LoggerUtility.Level.ERROR);
+                        if (this.plugin.getConfigHandler().getConfig().getBoolean("debug")) {
                             e1.printStackTrace();
                         }
                     }

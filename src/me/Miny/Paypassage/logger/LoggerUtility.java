@@ -1,105 +1,136 @@
 package me.Miny.Paypassage.logger;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import me.Miny.Paypassage.Paypass;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 /**
  *
  * @author ibhh
  */
-public class LoggerUtility{
+public class LoggerUtility {
 
     private Paypass plugin;
-    private enum Level {
-        DEBUG, INFO, SEVERE, WARNING, ERROR; 
+    private boolean debugfile;
+    private boolean debug;
+    private String Prefix;
+    private boolean usePrefix;
+    public ChatColor PrefixColor, TextColor;
+
+    public enum Level {
+
+        DEBUG, INFO, SEVERE, WARNING, ERROR;
     }
 
     public LoggerUtility(Paypass plugin) {
         this.plugin = plugin;
+        debugfile = plugin.getConfigHandler().getConfig().getBoolean("debugfile");
+        debug = plugin.getConfigHandler().getConfig().getBoolean("debug");
+        Prefix = plugin.getConfigHandler().getConfig().getString("Prefix");
+        usePrefix = plugin.getConfigHandler().getConfig().getBoolean("UsePrefix");
+        loadcolors();
     }
 
-    public void Logger(String msg, Level TYPE) {
+    private void loadcolors() {
+        PrefixColor = ChatColor.getByChar(plugin.getConfigHandler().getConfig().getString("PrefixColor"));
+        TextColor = ChatColor.getByChar(plugin.getConfigHandler().getConfig().getString("TextColor"));
+    }
+
+    public void log(String msg, Level TYPE) {
         try {
             if ((TYPE == Level.WARNING) || (TYPE == Level.ERROR)) {
                 System.err.println("[" + plugin.getName() + "]" + TYPE + ": " + msg);
-                if (this.config.debugfile) {
-                    this.Loggerclass.log("Error: " + msg);
+                if (debugfile) {
+                    this.log("Error: " + msg);
                 }
-                if (this.playerManager != null) {
-                    this.playerManager.BroadcastconsoleMsg("BookShop.consolemsg", " Warning: " + msg);
+            } else if (TYPE == Level.DEBUG) {
+                if (debug) {
+                    System.out.println(Prefix + "Debug: " + msg);
                 }
-            } else if (TYPE.equalsIgnoreCase("Debug")) {
-                if (this.config.debug) {
-                    System.out.println(PrefixConsole + "Debug: " + msg);
-                }
-                if (this.config.debugfile) {
-                    this.Loggerclass.log("Debug: " + msg);
-                }
-                if (this.playerManager != null) {
-                    this.playerManager.BroadcastconsoleMsg("BookShop.consolemsg", " Debug: " + msg);
+                if (debugfile) {
+                    this.log("Debug: " + msg);
                 }
             } else {
-                if (this.playerManager != null) {
-                    this.playerManager.BroadcastconsoleMsg("BookShop.consolemsg", msg);
-                }
-                System.out.println(PrefixConsole + msg);
-                if (this.config.debugfile) {
-                    this.Loggerclass.log(msg);
+                System.out.println(Prefix + msg);
+                if (debugfile) {
+                    this.log(msg);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[BookShop] Error: Uncatch Exeption!");
-            if (this.report != null) {
-                this.report.report(3317, "Logger doesnt work", e.getMessage(), "BookShop", e);
-            }
-            try {
-                MetricsHandler.Error += 1;
-            } catch (Exception e1) {
+            if (plugin.getReportHandler() != null) {
+                plugin.getReportHandler().report(3317, "Logger doesnt work", e.getMessage(), "BookShop", e);
             }
         }
     }
 
-    public void PlayerLogger(Player p, String msg, String TYPE) {
+    public void log(Player p, String msg, Level TYPE) {
         try {
-            if (TYPE.equalsIgnoreCase("Error")) {
-                if (this.config.UsePrefix) {
-                    p.sendMessage(this.config.Prefix + Prefix + ChatColor.RED + "Error: " + this.config.Text + msg);
-                    if (this.config.debugfile) {
-                        this.Loggerclass.log("Player: " + p.getName() + " Error: " + msg);
+            if (TYPE == Level.ERROR) {
+                if (usePrefix) {
+                    p.sendMessage(PrefixColor + Prefix + ChatColor.RED + "Error: " + TextColor + msg);
+                    if (debugfile) {
+                        this.log("Player: " + p.getName() + " Error: " + msg);
                     }
                 } else {
-                    p.sendMessage(ChatColor.RED + "Error: " + this.config.Text + msg);
-                    if (this.config.debugfile) {
-                        this.Loggerclass.log("Player: " + p.getName() + " Error: " + msg);
+                    p.sendMessage(ChatColor.RED + "Error: " + TextColor + msg);
+                    if (debugfile) {
+                        this.log("Player: " + p.getName() + " Error: " + msg);
                     }
-                }
-                if (this.playerManager != null) {
-                    this.playerManager.BroadcastconsoleMsg("BookShop.gamemsg", "Player: " + p.getName() + " Error: " + msg);
                 }
             } else {
-                if (this.config.UsePrefix) {
-                    p.sendMessage(this.config.Prefix + Prefix + this.config.Text + msg);
-                    if (this.config.debugfile) {
-                        this.Loggerclass.log("Player: " + p.getName() + " Msg: " + msg);
+                if (usePrefix) {
+                    p.sendMessage(PrefixColor + Prefix + TextColor + msg);
+                    if (debugfile) {
+                        this.log("Player: " + p.getName() + " Msg: " + msg);
                     }
                 } else {
-                    p.sendMessage(this.config.Text + msg);
-                    if (this.config.debugfile) {
-                        this.Loggerclass.log("Player: " + p.getName() + " Msg: " + msg);
+                    p.sendMessage(TextColor + msg);
+                    if (debugfile) {
+                        this.log("Player: " + p.getName() + " Msg: " + msg);
                     }
-                }
-                if (this.playerManager != null) {
-                    this.playerManager.BroadcastconsoleMsg("BookShop.gamemsg", "Player: " + p.getName() + " " + msg);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[BookShop] Error: Uncatch Exeption!");
-            this.report.report(3317, "PlayerLogger doesnt work", e.getMessage(), "BookShop", e);
-            try {
-                MetricsHandler.Error += 1;
-            } catch (Exception e1) {
+            if (plugin.getReportHandler() != null) {
+                plugin.getReportHandler().report(3317, "PlayerLogger doesnt work", e.getMessage(), "BookShop", e);
             }
+        }
+    }
+
+    public void log(String in) {
+        Date now = new Date();
+        String Stream = now.toString();
+        String path = plugin.getDataFolder().toString() + File.separator + "debugfiles" + File.separator;
+        File directory = new File(path);
+        directory.mkdirs();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd 'at' HH");
+        File file = new File(path + "debug-" + ft.format(now) + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        }
+        try {
+            // Create file
+            FileWriter fstream = new FileWriter(file, true);
+            PrintWriter out = new PrintWriter(fstream);
+            out.println("[" + Stream + "] " + in);
+            //Close the output stream
+            out.close();
+        } catch (Exception e) {//Catch exception if any
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
