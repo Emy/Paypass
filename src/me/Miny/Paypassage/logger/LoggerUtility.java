@@ -24,7 +24,6 @@ public class LoggerUtility {
     public ChatColor PrefixColor, TextColor;
 
     public enum Level {
-
         DEBUG, INFO, SEVERE, WARNING, ERROR;
     }
 
@@ -44,14 +43,14 @@ public class LoggerUtility {
 
     public void log(String msg, Level TYPE) {
         try {
-            if ((TYPE == Level.WARNING) || (TYPE == Level.ERROR)) {
-                System.err.println("[" + plugin.getName() + "]" + TYPE + ": " + msg);
+            if (TYPE.equals(Level.WARNING) || TYPE.equals(Level.ERROR)) {
+                System.err.println("[" + plugin.getName() + "] " + TYPE.name() + ": " + msg);
                 if (debugfile) {
                     this.log("Error: " + msg);
                 }
-            } else if (TYPE == Level.DEBUG) {
+            } else if (TYPE.equals(Level.DEBUG)) {
                 if (debug) {
-                    System.out.println(Prefix + "Debug: " + msg);
+                    System.out.println("[" + Prefix + "]" + " Debug: " + msg);
                 }
                 if (debugfile) {
                     this.log("Debug: " + msg);
@@ -73,21 +72,21 @@ public class LoggerUtility {
 
     public void log(Player p, String msg, Level TYPE) {
         try {
-            if (TYPE == Level.ERROR) {
+            if (TYPE.equals(Level.WARNING) || TYPE.equals(Level.ERROR)) {
                 if (usePrefix) {
-                    p.sendMessage(PrefixColor + Prefix + ChatColor.RED + "Error: " + TextColor + msg);
+                    p.sendMessage(PrefixColor + "[" + Prefix + "]" + ChatColor.RED  + " " +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() + " Error: " + msg);
+                        this.log("Player: " + p.getName() +  TYPE.name() + ": " + msg);
                     }
                 } else {
-                    p.sendMessage(ChatColor.RED + "Error: " + TextColor + msg);
+                    p.sendMessage(ChatColor.RED +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() + " Error: " + msg);
+                        this.log("Player: " + p.getName() +  TYPE.name() + ": " + msg);
                     }
                 }
             } else {
                 if (usePrefix) {
-                    p.sendMessage(PrefixColor + Prefix + TextColor + msg);
+                    p.sendMessage(PrefixColor + "[" + Prefix + "]" + " " + TextColor + msg);
                     if (debugfile) {
                         this.log("Player: " + p.getName() + " Msg: " + msg);
                     }

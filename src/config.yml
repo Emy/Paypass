@@ -7,7 +7,7 @@ senddebugfile: true
 debug: false
 debugfile: true
 UsePrefix: true
-Prefix: [Paypassage]
+Prefix: Paypassage
 PrefixColor: b
 TextColor: 6
 updateIntervall: 30

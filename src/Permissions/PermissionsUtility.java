@@ -20,9 +20,8 @@ public class PermissionsUtility {
     private GroupManager groupManager;
     public int PermPlugin = 0;
 
-    public PermissionsUtility(Paypass pl, String von) {
+    public PermissionsUtility(Paypass pl) {
         this.plugin = pl;
-        final String von2 = von;
         final PluginManager pluginManager = plugin.getServer().getPluginManager();
         final Plugin GMplugin = pluginManager.getPlugin("GroupManager");
 

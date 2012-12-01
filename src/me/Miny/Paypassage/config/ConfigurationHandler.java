@@ -42,6 +42,7 @@ public class ConfigurationHandler {
         }
         File configl = new File("language_" + plugin.getConfig().getString("language") + ".yml");
         if (!configl.exists()) {
+            plugin.getLoggerUtility().log("language Config not found", LoggerUtility.Level.DEBUG);
             createLanguageConfig();
         }
         return false;

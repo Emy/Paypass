@@ -1,5 +1,6 @@
 package me.Miny.Paypassage;
  
+import Permissions.PermissionsUtility;
 import me.Miny.Paypassage.Report.ReportToHost;
 import me.Miny.Paypassage.config.ConfigurationHandler;
 import me.Miny.Paypassage.logger.LoggerUtility;
@@ -19,8 +20,9 @@ public class Paypass extends JavaPlugin {
     private boolean started = false;
     //Modules
     private LoggerUtility logger;
-    private ConfigurationHandler conifg;
+    private ConfigurationHandler config;
     private ReportToHost report;
+    private PermissionsUtility permissions;
 
     public ReportToHost getReportHandler() {
         if(report == null){
@@ -28,12 +30,26 @@ public class Paypass extends JavaPlugin {
         }
         return report;
     }
+
+    public PermissionsUtility getPermissions() {
+        if(permissions == null){
+            permissions = new PermissionsUtility(this);
+        }
+        return permissions;
+    }
+    
     
     public ConfigurationHandler getConfigHandler() {
-        return conifg;
+        if(config == null){
+            config = new ConfigurationHandler(this);
+        }
+        return config;
     }
 
     public LoggerUtility getLoggerUtility() {
+        if(logger == null){
+            logger = new LoggerUtility(this);
+        }
         return logger;
     }
 
@@ -44,17 +60,22 @@ public class Paypass extends JavaPlugin {
     @Override
     public void onDisable() {
         long time = System.nanoTime();
-        System.out.println("Paypassage Deaktiviert in " + ((System.nanoTime() - time) / 1000000 ) + " ms");
+        System.out.println("Paypassage disabled in " + ((System.nanoTime() - time) / 1000000 ) + " ms");
  
     }
  
     @Override
     public void onEnable() {
         long time = System.nanoTime();
-        logger = new LoggerUtility(this);
-        conifg = new ConfigurationHandler(this);
-        report = new ReportToHost(this);
-        System.out.println("Paypassage Aktiviert in" + ((System.nanoTime() - time) / 1000000 ) + " ms");
+        getConfigHandler().onStart();
+        logger = getLoggerUtility();
+        getLoggerUtility().log("creating config!", LoggerUtility.Level.DEBUG);
+        getLoggerUtility().log("init logger!", LoggerUtility.Level.DEBUG);
+        report = getReportHandler();
+        getLoggerUtility().log("init report!", LoggerUtility.Level.DEBUG);
+        permissions = getPermissions();
+        getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
+        getLoggerUtility().log("Paypassage enabled in " + ((System.nanoTime() - time) / 1000000 ) + " ms", LoggerUtility.Level.INFO);
     }
  
     @Override
