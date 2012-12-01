@@ -36,10 +36,13 @@ public class Paypass extends JavaPlugin {
             if (command.getName().equalsIgnoreCase("pp")) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("create")) {
-                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Erstellt");
+                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage created");
                         return true;
-                    }else if (args[0].equalsIgnoreCase("remove")) {
-                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Entfernt");
+                    }else if (args[0].equalsIgnoreCase("delete")) {
+                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage deleted");
+                        return true;
+                    }else if (args[0].equalsIgnoreCase("info")) {
+                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Status:" + ChatColor.GREEN + "Working!" );
                         return true;
                     } else {
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.RED + "Du hast irgendetwas falsch gemacht!");
