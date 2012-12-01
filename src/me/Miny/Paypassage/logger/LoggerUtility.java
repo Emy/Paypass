@@ -6,7 +6,7 @@ import me.Miny.Paypassage.Paypass;
  *
  * @author ibhh
  */
-public class LoggerUtility {
+public class LoggerUtility{
 
     private Paypass plugin;
     private enum Level {

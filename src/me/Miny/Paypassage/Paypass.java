@@ -1,5 +1,7 @@
 package me.Miny.Paypassage;
  
+import me.Miny.Paypassage.config.ConfigurationHandler;
+import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,10 +13,22 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Miny
  */
 public class Paypass extends JavaPlugin {
+    
+    private LoggerUtility logger;
+    private ConfigurationHandler conifg;
+
+    public ConfigurationHandler getConifg() {
+        return conifg;
+    }
+
+    public LoggerUtility getLoggerUtility() {
+        return logger;
+    }
  
     @Override
     public void onDisable() {
         long time = System.nanoTime();
+        conifg = new ConfigurationHandler(this);
         System.out.println("Paypassage Deaktiviert in " + ((System.nanoTime() - time) / 1000000 ) + " ms");
  
     }
@@ -30,7 +44,6 @@ public class Paypass extends JavaPlugin {
         if (sender instanceof Player) {
  
             Player player = (Player) sender;
- 
             /**
              * /pp create command
              */
