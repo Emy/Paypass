@@ -17,10 +17,10 @@ public class LoggerUtility {
         this.plugin = plugin;
     }
 
-    public void Logger(String msg, Level) {
+    public void Logger(String msg, Level TYPE) {
         try {
-            if ((TYPE.equalsIgnoreCase("Warning")) || (TYPE.equalsIgnoreCase("Error"))) {
-                System.err.println(PrefixConsole + TYPE + ": " + msg);
+            if ((TYPE == Level.WARNING) || (TYPE == Level.ERROR)) {
+                System.err.println("[" + plugin.getName() + "]" + TYPE + ": " + msg);
                 if (this.config.debugfile) {
                     this.Loggerclass.log("Error: " + msg);
                 }
