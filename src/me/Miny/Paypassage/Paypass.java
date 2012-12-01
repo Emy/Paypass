@@ -15,13 +15,17 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Paypass extends JavaPlugin {
     
-    
+    //status
+    private boolean started = false;
     //Modules
     private LoggerUtility logger;
     private ConfigurationHandler conifg;
     private ReportToHost report;
 
     public ReportToHost getReportHandler() {
+        if(report == null){
+            report = new ReportToHost(this);
+        }
         return report;
     }
     
@@ -32,13 +36,14 @@ public class Paypass extends JavaPlugin {
     public LoggerUtility getLoggerUtility() {
         return logger;
     }
- 
+
+    public boolean isStarted() {
+        return started;
+    }
+    
     @Override
     public void onDisable() {
         long time = System.nanoTime();
-        logger = new LoggerUtility(this);
-        conifg = new ConfigurationHandler(this);
-        report = new ReportToHost(this);
         System.out.println("Paypassage Deaktiviert in " + ((System.nanoTime() - time) / 1000000 ) + " ms");
  
     }
@@ -46,6 +51,9 @@ public class Paypass extends JavaPlugin {
     @Override
     public void onEnable() {
         long time = System.nanoTime();
+        logger = new LoggerUtility(this);
+        conifg = new ConfigurationHandler(this);
+        report = new ReportToHost(this);
         System.out.println("Paypassage Aktiviert in" + ((System.nanoTime() - time) / 1000000 ) + " ms");
     }
  
