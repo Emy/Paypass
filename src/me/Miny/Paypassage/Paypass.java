@@ -16,14 +16,17 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Paypass extends JavaPlugin {
     
-    //status
-    private boolean started = false;
     //Modules
     private LoggerUtility logger;
     private ConfigurationHandler config;
     private ReportToHost report;
     private PermissionsUtility permissions;
 
+    
+    /**
+     * returns an Error-Reporting-API
+     * @return ReportToHost
+     */
     public ReportToHost getReportHandler() {
         if(report == null){
             report = new ReportToHost(this);
@@ -31,6 +34,10 @@ public class Paypass extends JavaPlugin {
         return report;
     }
 
+    /**
+     * Returns a permissions API (GroupManager, PermissionsEx, bPermissions, BukkitPermissions)
+     * @return PermissionsUtility
+     */
     public PermissionsUtility getPermissions() {
         if(permissions == null){
             permissions = new PermissionsUtility(this);
@@ -38,7 +45,10 @@ public class Paypass extends JavaPlugin {
         return permissions;
     }
     
-    
+    /**
+     * Returns a handler that manages all config files
+     * @return ConfigurationHandler
+     */
     public ConfigurationHandler getConfigHandler() {
         if(config == null){
             config = new ConfigurationHandler(this);
@@ -46,6 +56,11 @@ public class Paypass extends JavaPlugin {
         return config;
     }
 
+    
+    /**
+     * returns a custom loggertool
+     * @return LoggerUtility
+     */
     public LoggerUtility getLoggerUtility() {
         if(logger == null){
             logger = new LoggerUtility(this);
@@ -53,17 +68,30 @@ public class Paypass extends JavaPlugin {
         return logger;
     }
 
+    
+    /**
+     * returns the same as isEnabled()
+     * @return boolean isEnabled
+     */
     public boolean isStarted() {
-        return started;
+        return this.isEnabled();
     }
     
+    
+    /**
+     * Called by ConfigurationHandler if loading of files failed
+     * Disables the plugin
+     */
     @Override
     public void onDisable() {
+        setEnabled(false);
         long time = System.nanoTime();
         System.out.println("Paypassage disabled in " + ((System.nanoTime() - time) / 1000000 ) + " ms");
- 
     }
  
+    /**
+     * Enables the plugin
+     */
     @Override
     public void onEnable() {
         long time = System.nanoTime();
@@ -76,12 +104,24 @@ public class Paypass extends JavaPlugin {
         permissions = getPermissions();
         getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
         getLoggerUtility().log("Paypassage enabled in " + ((System.nanoTime() - time) / 1000000 ) + " ms", LoggerUtility.Level.INFO);
+        setEnabled(true);
     }
- 
+    
+    /**
+     * Handles commands
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     * @return true
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!isEnabled()){
+            getLoggerUtility().log("Paypassage plugin is NOT enabled!", LoggerUtility.Level.ERROR);
+            return true;
+        }
         if (sender instanceof Player) {
- 
             Player player = (Player) sender;
             /**
              * /pp create command
@@ -89,6 +129,7 @@ public class Paypass extends JavaPlugin {
             if (command.getName().equalsIgnoreCase("pp")) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("create")) {
+                        //create Command
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage created");
                         return true;
                     }else if (args[0].equalsIgnoreCase("delete")) {

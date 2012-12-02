@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import me.Miny.Paypassage.Paypass;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -45,18 +46,21 @@ public class LoggerUtility {
         try {
             if (TYPE.equals(Level.WARNING) || TYPE.equals(Level.ERROR)) {
                 System.err.println("[" + plugin.getName() + "] " + TYPE.name() + ": " + msg);
+                Bukkit.broadcast(PrefixColor + "[" + Prefix + "]" + ChatColor.RED  + " " +  TYPE.name() + ": " + TextColor + msg, "Paypassage.log");
                 if (debugfile) {
                     this.log("Error: " + msg);
                 }
             } else if (TYPE.equals(Level.DEBUG)) {
                 if (debug) {
                     System.out.println("[" + Prefix + "]" + " Debug: " + msg);
+                    Bukkit.broadcast(PrefixColor + "[" + Prefix + "]" + " Debug: " + TextColor + msg, "Paypassage.log");
                 }
                 if (debugfile) {
                     this.log("Debug: " + msg);
                 }
             } else {
                 System.out.println(Prefix + msg);
+                Bukkit.broadcast(PrefixColor + "[" + Prefix + "]" + " " + TextColor + msg, "Paypassage.log");
                 if (debugfile) {
                     this.log(msg);
                 }
