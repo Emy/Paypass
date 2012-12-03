@@ -33,6 +33,8 @@ public class Privacy {
     }
 
     public void savePrivacyFiles() {
+        File dir = new File(plugin.getDataFolder() + File.separator + "privacy");
+        dir.mkdirs();
         try {
             ObjectManager.save(config, plugin.getDataFolder() + File.separator + "privacy" + File.separator + "User.privacy");
         } catch (Exception e) {

@@ -130,6 +130,7 @@ public class Paypassage extends JavaPlugin {
     @Override
     public void onDisable() {
         setEnabled(false);
+        privacy.savePrivacyFiles();
         long time = System.nanoTime();
         System.out.println("Paypassage disabled in " + ((System.nanoTime() - time) / 1000000) + " ms");
     }

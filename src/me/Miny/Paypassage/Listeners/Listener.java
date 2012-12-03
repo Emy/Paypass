@@ -38,6 +38,7 @@ public class Listener implements org.bukkit.event.Listener {
             this.plugin.getReportHandler().report(3321, "Player join throws error", e.getMessage(), "PaypassageListener", e);
         }
         if (!plugin.getPrivacy().getConfig().containsKey(event.getPlayer().getName()) && plugin.getConfigHandler().getConfig().getBoolean("users_can_choose_privacy")) {
+            this.plugin.getLoggerUtility().log("no privacy set!", LoggerUtility.Level.DEBUG);
             this.plugin.getLoggerUtility().log(event.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("privacy.notification.1"), LoggerUtility.Level.WARNING);
             this.plugin.getLoggerUtility().log(event.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("privacy.notification.2"), LoggerUtility.Level.WARNING);
             this.plugin.getLoggerUtility().log(event.getPlayer(),  plugin.getConfigHandler().getLanguage_config().getString("privacy.notification.3"), LoggerUtility.Level.WARNING);
