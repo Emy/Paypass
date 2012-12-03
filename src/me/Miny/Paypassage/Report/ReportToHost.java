@@ -7,16 +7,16 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
 
 public class ReportToHost {
     
-    private Paypass plugin;
+    private Paypassage plugin;
     private FileSend filesend;
     private StackTraceUtil util;
     
-    public ReportToHost(Paypass pl) {
+    public ReportToHost(Paypassage pl) {
         this.plugin = pl;
         util = new StackTraceUtil();
         this.filesend = new FileSend(this.plugin);

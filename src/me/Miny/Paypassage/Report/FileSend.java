@@ -11,14 +11,14 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
 
 public class FileSend {
 
-    private Paypass plugin;
+    private Paypassage plugin;
 
-    public FileSend(Paypass plugin) {
+    public FileSend(Paypassage plugin) {
         this.plugin = plugin;
     }
 

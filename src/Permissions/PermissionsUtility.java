@@ -1,7 +1,7 @@
 package Permissions;
 
 import de.bananaco.bpermissions.api.util.CalculableType;
-import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -16,11 +16,11 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class PermissionsUtility {
 
-    private Paypass plugin;
+    private Paypassage plugin;
     private GroupManager groupManager;
     public int PermPlugin = 0;
 
-    public PermissionsUtility(Paypass pl) {
+    public PermissionsUtility(Paypassage pl) {
         this.plugin = pl;
         final PluginManager pluginManager = plugin.getServer().getPluginManager();
         final Plugin GMplugin = pluginManager.getPlugin("GroupManager");

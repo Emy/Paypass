@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import me.Miny.Paypassage.Paypass;
+import me.Miny.Paypassage.Paypassage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
  */
 public class LoggerUtility {
 
-    private Paypass plugin;
+    private Paypassage plugin;
     private boolean debugfile;
     private boolean debug;
     private String Prefix;
@@ -28,7 +28,7 @@ public class LoggerUtility {
         DEBUG, INFO, SEVERE, WARNING, ERROR;
     }
 
-    public LoggerUtility(Paypass plugin) {
+    public LoggerUtility(Paypassage plugin) {
         this.plugin = plugin;
         debugfile = plugin.getConfigHandler().getConfig().getBoolean("debugfile");
         debug = plugin.getConfigHandler().getConfig().getBoolean("debug");
@@ -67,45 +67,51 @@ public class LoggerUtility {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("[BookShop] Error: Uncatch Exeption!");
+            System.out.println("[Paypassage] Error: Uncatch Exeption!");
             if (plugin.getReportHandler() != null) {
-                plugin.getReportHandler().report(3317, "Logger doesnt work", e.getMessage(), "BookShop", e);
+                plugin.getReportHandler().report(3317, "Logger doesnt work", e.getMessage(), "Paypassage", e);
             }
         }
     }
 
     public void log(Player p, String msg, Level TYPE) {
         try {
+            String playername = p.getName();
+            if(plugin.getPrivacy().getConfig().containsKey(playername)){
+                if(plugin.getPrivacy().getConfig().get(playername)){
+                    playername = "AnonymousPlayer";
+                }
+            }
             if (TYPE.equals(Level.WARNING) || TYPE.equals(Level.ERROR)) {
                 if (usePrefix) {
                     p.sendMessage(PrefixColor + "[" + Prefix + "]" + ChatColor.RED  + " " +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() +  TYPE.name() + ": " + msg);
+                        this.log("Player: " + playername +  TYPE.name() + ": " + msg);
                     }
                 } else {
                     p.sendMessage(ChatColor.RED +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() +  TYPE.name() + ": " + msg);
+                        this.log("Player: " + playername +  TYPE.name() + ": " + msg);
                     }
                 }
             } else {
                 if (usePrefix) {
                     p.sendMessage(PrefixColor + "[" + Prefix + "]" + " " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() + " Msg: " + msg);
+                        this.log("Player: " + playername + " Msg: " + msg);
                     }
                 } else {
                     p.sendMessage(TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + p.getName() + " Msg: " + msg);
+                        this.log("Player: " + playername + " Msg: " + msg);
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("[BookShop] Error: Uncatch Exeption!");
+            System.out.println("[Paypassage] Error: Uncatch Exeption!");
             if (plugin.getReportHandler() != null) {
-                plugin.getReportHandler().report(3317, "PlayerLogger doesnt work", e.getMessage(), "BookShop", e);
+                plugin.getReportHandler().report(3317, "PlayerLogger doesnt work", e.getMessage(), "Paypassage", e);
             }
         }
     }

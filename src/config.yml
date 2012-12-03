@@ -6,6 +6,7 @@ senderrorreport: true
 senddebugfile: true
 debug: false
 debugfile: true
+users_can_choose_privacy: true
 UsePrefix: true
 Prefix: Paypassage
 PrefixColor: b
