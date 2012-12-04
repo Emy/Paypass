@@ -15,8 +15,26 @@ public class Privacy {
 
     public Privacy(Paypassage plugin) {
         this.plugin = plugin;
+        loadData();
     }
 
+    public void loadData(){
+        File dir = new File(plugin.getDataFolder() + File.separator + "privacy");
+        dir.mkdirs();
+        if(!new File(plugin.getDataFolder() + File.separator + "privacy" + File.separator + "User.privacy").exists()){
+            plugin.getLoggerUtility().log("Cannot load privacy files statistics: no data found", LoggerUtility.Level.DEBUG);
+            return;
+        }
+        try {
+            config = ObjectManager.load(plugin.getDataFolder() + File.separator + "privacy" + File.separator + "User.privacy");
+        } catch (Exception e) {
+            plugin.getLoggerUtility().log("Cannot load privacy files statistics!", LoggerUtility.Level.ERROR);
+            if (plugin.getConfigHandler().getConfig().getBoolean("debug")) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     public void autoSave() {
         plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin,
                 new Runnable() {
@@ -38,7 +56,7 @@ public class Privacy {
         try {
             ObjectManager.save(config, plugin.getDataFolder() + File.separator + "privacy" + File.separator + "User.privacy");
         } catch (Exception e) {
-            plugin.getLoggerUtility().log("Cannot save Shop statistics!", LoggerUtility.Level.ERROR);
+            plugin.getLoggerUtility().log("Cannot save Privacy files statistics!", LoggerUtility.Level.ERROR);
             if (plugin.getConfigHandler().getConfig().getBoolean("debug")) {
                 e.printStackTrace();
             }

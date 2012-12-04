@@ -78,7 +78,9 @@ public class LoggerUtility {
         try {
             String playername = p.getName();
             if(plugin.getPrivacy().getConfig().containsKey(playername)){
+                plugin.getLoggerUtility().log("user privacy set", LoggerUtility.Level.DEBUG);
                 if(plugin.getPrivacy().getConfig().get(playername)){
+                    plugin.getLoggerUtility().log("userdata not allowed", LoggerUtility.Level.DEBUG);
                     playername = "AnonymousPlayer";
                 }
             }
@@ -86,12 +88,12 @@ public class LoggerUtility {
                 if (usePrefix) {
                     p.sendMessage(PrefixColor + "[" + Prefix + "]" + ChatColor.RED  + " " +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + playername +  TYPE.name() + ": " + msg);
+                        this.log("Player: " + playername + " " +  TYPE.name() + ": " + msg);
                     }
                 } else {
                     p.sendMessage(ChatColor.RED +  TYPE.name() + ": " + TextColor + msg);
                     if (debugfile) {
-                        this.log("Player: " + playername +  TYPE.name() + ": " + msg);
+                        this.log("Player: " + playername + " " +  TYPE.name() + ": " + msg);
                     }
                 }
             } else {
