@@ -153,8 +153,13 @@ public class Update {
             return (float) -1;
         }
         plugin.getLoggerUtility().log("link: " + link, LoggerUtility.Level.DEBUG);
-        String newVersion = link.substring(link.lastIndexOf(search), link.lastIndexOf("/")).replace("-", ".");
-        newVersion = newVersion.substring(search.length());
+        String newVersion = "-1";
+        try {
+            newVersion = link.substring(link.lastIndexOf(search), link.lastIndexOf("/")).replace("-", ".");
+            newVersion = newVersion.substring(search.length());
+        } catch (StringIndexOutOfBoundsException e) {
+            plugin.getLoggerUtility().log("Update checking temporaly failed. May dev.bukkit.org is down or is in trouble." + newVersion, LoggerUtility.Level.WARNING);
+        }
         plugin.getLoggerUtility().log("current version: " + newVersion, LoggerUtility.Level.DEBUG);
         return Float.parseFloat(newVersion);
     }

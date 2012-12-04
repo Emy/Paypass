@@ -88,47 +88,47 @@ public class ConfigurationHandler {
                 language_config.addDefault("permission.error", "Wir haben ein Problem! Dies darfst Du nicht machen!");
                 //privacy output
                 language_config.addDefault("privacy.notification.1", "Dieses plugin speichert nutzerbezogene Daten in eine Datei");
-                language_config.addDefault("privacy.notification.2", "\"/Paypassage allowtracking\" um den Plugin dies zu erlauben");
-                language_config.addDefault("privacy.notification.3", "\"/Paypassage denytracking\" um deine Daten zu anonymisieren");
+                language_config.addDefault("privacy.notification.2", "\"/pp allowtracking\" um den Plugin dies zu erlauben");
+                language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" um deine Daten zu anonymisieren");
                 language_config.addDefault("privacy.notification.denied", "Das Plugin speichert nun keine nutzerbezogene Daten mehr");
                 language_config.addDefault("privacy.notification.allowed", "Das Plugin speichert deine Daten, wende Dich an einen Admin um diese z.B. loeschen zu lassen");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
                 language_config.addDefault("commands.reload.description", "Laedt das Plugin neu");
-                language_config.addDefault("commands.reload.usage", "/Paypassage reload");
+                language_config.addDefault("commands.reload.usage", "/pp reload");
                 
                 language_config.addDefault("commands.denytracking.name", "denytracking");
                 language_config.addDefault("commands.denytracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.denytracking.description", "Zwingt das Plugin deine Daten zu anonymisieren");
-                language_config.addDefault("commands.denytracking.usage", "/Paypassage denytracking");
+                language_config.addDefault("commands.denytracking.usage", "/pp denytracking");
                 
                 language_config.addDefault("commands.allowtracking.name", "allowtracking");
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Erlaubt dem Plugin deine Daten zu speichern");
-                language_config.addDefault("commands.allowtracking.usage", "/Paypassage allowtracking");
+                language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
             } else {
                 language_config.addDefault("permission.error", "we have a problem! You musnt do this!");
                 language_config.addDefault("privacy.notification.1", "this plugin saves your interact events to a log");
-                language_config.addDefault("privacy.notification.2", "\"/Paypassage allowtracking\" to allow the plugin to save your data");
-                language_config.addDefault("privacy.notification.3", "\"/Paypassage denytracking\" to anonymise your data");
+                language_config.addDefault("privacy.notification.2", "\"/pp allowtracking\" to allow the plugin to save your data");
+                language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" to anonymise your data");
                 language_config.addDefault("privacy.notification.denied", "The plugin anonymises your data now");
                 language_config.addDefault("privacy.notification.allowed", "The plugin saves your data now, to delete the data, please tell an admin");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
                 language_config.addDefault("commands.reload.description", "Reloads the plugin");
-                language_config.addDefault("commands.reload.usage", "/Paypassage reload");
+                language_config.addDefault("commands.reload.usage", "/pp reload");
                 
                 language_config.addDefault("commands.denytracking.name", "denytracking");
                 language_config.addDefault("commands.denytracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.denytracking.description", "forces the plugin to anonymise your data");
-                language_config.addDefault("commands.denytracking.usage", "/Paypassage denytracking");
+                language_config.addDefault("commands.denytracking.usage", "/pp denytracking");
                 
                 language_config.addDefault("commands.allowtracking.name", "allowtracking");
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Allows the plugin to save userdata");
-                language_config.addDefault("commands.allowtracking.usage", "/Paypassage allowtracking");
+                language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
             }
             try {
                 language_config.options().copyDefaults(true);

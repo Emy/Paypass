@@ -174,7 +174,7 @@ public class PermissionsUtility {
                     if (player.hasPermission(action)) {
                         return true;
                     } else {
-                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                         return false;
                     }
                 } catch (Exception e) {
@@ -194,7 +194,7 @@ public class PermissionsUtility {
                     if (user.has(action)) {
                         return true;
                     } else {
-                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                         return false;
                     }
                 } catch (Exception e) {
@@ -207,7 +207,7 @@ public class PermissionsUtility {
                         if (permissions.has(player, action)) {
                             return true;
                         } else {
-                            plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                            plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                             return false;
                         }
                     } catch (Exception e1) {
@@ -239,7 +239,7 @@ public class PermissionsUtility {
                     if (handler.has(player, action)) {
                         return true;
                     } else {
-                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                         return false;
                     }
                 } catch (Exception e) {
@@ -260,7 +260,7 @@ public class PermissionsUtility {
                     } else if (de.bananaco.bpermissions.api.ApiLayer.hasPermission(player.getWorld().getName(), CalculableType.GROUP, player.getName(), action)) {
                         return true;
                     } else {
-                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                        plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                         return false;
                     }
                 } catch (Exception e) {
@@ -271,7 +271,7 @@ public class PermissionsUtility {
                     return false;
                 }
             } else {
-                plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfig().getString("permissions.error." + plugin.getConfig().getString("language")) + " (" + action + ")", LoggerUtility.Level.ERROR);
+                plugin.getLoggerUtility().log(player, player.getName() + " " + plugin.getConfigHandler().getLanguage_config().getString("permission.error") + " (" + action + ")", LoggerUtility.Level.ERROR);
                 System.out.println("PermissionsEx plugin are not found.");
                 return false;
             }

@@ -1,6 +1,7 @@
 package me.Miny.Paypassage;
 
 import Permissions.PermissionsUtility;
+import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Report.ReportToHost;
 import me.Miny.Paypassage.config.ConfigurationHandler;
 import me.Miny.Paypassage.logger.LoggerUtility;
@@ -26,6 +27,8 @@ public class Paypassage extends JavaPlugin {
     private Privacy privacy;
     private Update update;
     private Utilities pluginmanager;
+    private PPListener listener;
+    //Commands array
     private String[] commands = {
         "help",
         "debugfile",
@@ -39,6 +42,8 @@ public class Paypassage extends JavaPlugin {
         "denytracking",
         "allowtracking"
     };
+    
+    
 
     public String[] getCommands() {
         return commands;
@@ -56,6 +61,13 @@ public class Paypassage extends JavaPlugin {
         return report;
     }
 
+    public PPListener getListener() {
+        if(listener == null){
+            listener = new PPListener(this);
+        }
+        return listener;
+    }
+    
     public Utilities getPluginManager() {
         if (pluginmanager == null) {
             pluginmanager = new Utilities(this);
@@ -153,6 +165,8 @@ public class Paypassage extends JavaPlugin {
         getLoggerUtility().log("init privacy control!", LoggerUtility.Level.DEBUG);
         getUpdate().startUpdateTimer();
         getLoggerUtility().log("init update control!", LoggerUtility.Level.DEBUG);
+        getListener();
+        getLoggerUtility().log("init listeners!", LoggerUtility.Level.DEBUG);
         getLoggerUtility().log("Paypassage enabled in " + ((System.nanoTime() - time) / 1000000) + " ms", LoggerUtility.Level.INFO);
         setEnabled(true);
     }
