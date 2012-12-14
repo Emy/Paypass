@@ -2,10 +2,13 @@ package me.Miny.Paypassage.PPListeners;
 
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
+import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
@@ -58,8 +61,30 @@ public class PPListener implements org.bukkit.event.Listener {
     public void precommand(PlayerCommandPreprocessEvent event) {
         long time = System.nanoTime();
         if (plugin.isEnabled() && (event.getMessage().toLowerCase().startsWith("/pp".toLowerCase())) && (plugin.getConfigHandler().getConfig().getBoolean("debugfile"))) {
-            plugin.getLoggerUtility().log("Player: " + event.getPlayer().getName() + " command: " + event.getMessage());
+            if(plugin.getPrivacy().getConfig().containsKey(event.getPlayer().getName())){
+                plugin.getLoggerUtility().log("user privacy set", LoggerUtility.Level.DEBUG);
+                if(plugin.getPrivacy().getConfig().get(event.getPlayer().getName())){
+                    plugin.getLoggerUtility().log("userdata not allowed", LoggerUtility.Level.DEBUG);
+                    plugin.getLoggerUtility().log("Player: " + "Anonymous" + " command: " + event.getMessage(), LoggerUtility.Level.DEBUG);
+                } else {
+                    plugin.getLoggerUtility().log("Player: " + event.getPlayer().getName() + " command: " + event.getMessage(), LoggerUtility.Level.DEBUG);
+                }
+            }
         }
         this.plugin.getLoggerUtility().log("PlayerCommandPreprocessEvent handled in " + (System.nanoTime() - time) / 1000000 + " ms", LoggerUtility.Level.DEBUG);
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onInteract(PlayerInteractEvent e){
+        long time = System.nanoTime();
+        if(e.hasBlock()){
+            if(BlockTools.isSign(e.getClickedBlock())){
+                this.plugin.getLoggerUtility().log("Block is sign", LoggerUtility.Level.DEBUG);
+                if(((Sign) e.getClickedBlock().getState()).getLine(0).equals(plugin.getConfig().getString("sign_headline"))){
+                    
+                }
+            }
+        }
+        this.plugin.getLoggerUtility().log("PlayerInteractEvent handled in " + (System.nanoTime() - time) / 1000000 + " ms", LoggerUtility.Level.DEBUG);
     }
 }

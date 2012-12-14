@@ -1,4 +1,4 @@
-package Permissions;
+package me.Miny.Paypassage.Permissions;
 
 import de.bananaco.bpermissions.api.util.CalculableType;
 import me.Miny.Paypassage.Paypassage;

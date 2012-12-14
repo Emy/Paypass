@@ -12,3 +12,8 @@ Prefix: Paypassage
 PrefixColor: b
 TextColor: 6
 updateIntervall: 30
+sign_headline: Paypassage
+use_MySQL: false
+localhost: 3306/Paypassage
+dbUser: root
+dbPassword: root

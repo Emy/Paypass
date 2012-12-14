@@ -1,7 +1,8 @@
 package me.Miny.Paypassage;
 
-import Permissions.PermissionsUtility;
+import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
+import me.Miny.Paypassage.Permissions.PermissionsUtility;
 import me.Miny.Paypassage.Report.ReportToHost;
 import me.Miny.Paypassage.config.ConfigurationHandler;
 import me.Miny.Paypassage.logger.LoggerUtility;
@@ -28,6 +29,7 @@ public class Paypassage extends JavaPlugin {
     private Update update;
     private Utilities pluginmanager;
     private PPListener listener;
+    private DatabaseUtility databaseUtility;
     //Commands array
     private String[] commands = {
         "help",
@@ -59,6 +61,13 @@ public class Paypassage extends JavaPlugin {
             report = new ReportToHost(this);
         }
         return report;
+    }
+    
+    public DatabaseUtility getDatabaseUtility() {
+        if (databaseUtility == null) {
+            databaseUtility = new DatabaseUtility(this);
+        }
+        return databaseUtility;
     }
 
     public PPListener getListener() {
@@ -142,7 +151,7 @@ public class Paypassage extends JavaPlugin {
     @Override
     public void onDisable() {
         setEnabled(false);
-        privacy.savePrivacyFiles();
+        getPrivacy().savePrivacyFiles();
         long time = System.nanoTime();
         System.out.println("Paypassage disabled in " + ((System.nanoTime() - time) / 1000000) + " ms");
     }
@@ -161,6 +170,9 @@ public class Paypassage extends JavaPlugin {
         getLoggerUtility().log("init report!", LoggerUtility.Level.DEBUG);
         getPermissions();
         getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
+        getLoggerUtility().log("init database!", LoggerUtility.Level.DEBUG);
+        getDatabaseUtility();
+        getPrivacy().loadData();
         getPrivacy().autoSave();
         getLoggerUtility().log("init privacy control!", LoggerUtility.Level.DEBUG);
         getUpdate().startUpdateTimer();
@@ -219,9 +231,8 @@ public class Paypassage extends JavaPlugin {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.denytracking.permission"))) {
                             if (getPrivacy().getConfig().containsKey(player.getName())) {
                                 getPrivacy().getConfig().remove(player.getName());
-
                             }
-                            getPrivacy().getConfig().put(player.getName(), Boolean.FALSE);
+                            getPrivacy().getConfig().put(player.getName(), false);
                             getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("privacy.notification.denied"), LoggerUtility.Level.INFO);
                         }
                         return true;
