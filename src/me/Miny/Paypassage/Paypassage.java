@@ -171,7 +171,7 @@ public class Paypassage extends JavaPlugin {
         getPermissions();
         getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
         getLoggerUtility().log("init database!", LoggerUtility.Level.DEBUG);
-        getDatabaseUtility();
+        getDatabaseUtility().PrepareDB();
         getPrivacy().loadData();
         getPrivacy().autoSave();
         getLoggerUtility().log("init privacy control!", LoggerUtility.Level.DEBUG);

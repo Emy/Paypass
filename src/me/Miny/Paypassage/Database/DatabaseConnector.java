@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
-import sun.nio.cs.ext.GB18030;
 
 /**
  *
@@ -22,6 +21,12 @@ public class DatabaseConnector {
         this.plugin = plugin;
         this.use_MySQL = use_MySQL;
     }
+
+    public Connection getConnection() {
+        return cn;
+    }
+    
+    
     
     public Connection createConnection() {
         if (use_MySQL) {
