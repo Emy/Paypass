@@ -10,7 +10,7 @@ import me.Miny.Paypassage.logger.LoggerUtility;
  * @author ibhh
  */
 public class DatabaseTools {
-     private static void SQLErrorHandler(Paypassage plugin, SQLException ex) {
+     public static void SQLErrorHandler(Paypassage plugin, SQLException ex) {
         do {
             try {
                 plugin.getLoggerUtility().log("Exception Message: " + ex.getMessage(), LoggerUtility.Level.ERROR);

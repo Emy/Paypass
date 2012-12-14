@@ -1,5 +1,9 @@
 package me.Miny.Paypassage;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import me.Miny.Paypassage.Database.DatabaseTools;
 import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Permissions.PermissionsUtility;
@@ -171,7 +175,13 @@ public class Paypassage extends JavaPlugin {
         getPermissions();
         getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
         getLoggerUtility().log("init database!", LoggerUtility.Level.DEBUG);
-        getDatabaseUtility().PrepareDB();
+        try {
+            getDatabaseUtility().PrepareDB();
+        } catch (SQLException ex) {
+            DatabaseTools.SQLErrorHandler(this, ex);
+            setEnabled(false);
+            return;
+        }
         getPrivacy().loadData();
         getPrivacy().autoSave();
         getLoggerUtility().log("init privacy control!", LoggerUtility.Level.DEBUG);

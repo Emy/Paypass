@@ -1,5 +1,8 @@
 package me.Miny.Paypassage.PPListeners;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.Material;
@@ -61,9 +64,9 @@ public class PPListener implements org.bukkit.event.Listener {
     public void precommand(PlayerCommandPreprocessEvent event) {
         long time = System.nanoTime();
         if (plugin.isEnabled() && (event.getMessage().toLowerCase().startsWith("/pp".toLowerCase())) && (plugin.getConfigHandler().getConfig().getBoolean("debugfile"))) {
-            if(plugin.getPrivacy().getConfig().containsKey(event.getPlayer().getName())){
+            if (plugin.getPrivacy().getConfig().containsKey(event.getPlayer().getName())) {
                 plugin.getLoggerUtility().log("user privacy set", LoggerUtility.Level.DEBUG);
-                if(plugin.getPrivacy().getConfig().get(event.getPlayer().getName())){
+                if (plugin.getPrivacy().getConfig().get(event.getPlayer().getName())) {
                     plugin.getLoggerUtility().log("userdata not allowed", LoggerUtility.Level.DEBUG);
                     plugin.getLoggerUtility().log("Player: " + "Anonymous" + " command: " + event.getMessage(), LoggerUtility.Level.DEBUG);
                 } else {
@@ -73,15 +76,30 @@ public class PPListener implements org.bukkit.event.Listener {
         }
         this.plugin.getLoggerUtility().log("PlayerCommandPreprocessEvent handled in " + (System.nanoTime() - time) / 1000000 + " ms", LoggerUtility.Level.DEBUG);
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         long time = System.nanoTime();
-        if(e.hasBlock()){
-            if(BlockTools.isSign(e.getClickedBlock())){
+        if (e.hasBlock()) {
+            if (BlockTools.isSign(e.getClickedBlock())) {
                 this.plugin.getLoggerUtility().log("Block is sign", LoggerUtility.Level.DEBUG);
-                if(((Sign) e.getClickedBlock().getState()).getLine(0).equals(plugin.getConfig().getString("sign_headline"))){
-                    
+                if (((Sign) e.getClickedBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
+                    final PlayerInteractEvent event = e;
+                    plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
+                                if(signname.equalsIgnoreCase("Error")){
+                                    return;
+                                } else {
+                                    //Get dest
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
                 }
             }
         }
