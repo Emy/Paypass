@@ -123,9 +123,9 @@ public class ConfigurationHandler {
                 language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" to anonymise your data");
                 language_config.addDefault("privacy.notification.denied", "The plugin anonymises your data now");
                 language_config.addDefault("privacy.notification.allowed", "The plugin saves your data now, to delete the data, please tell an admin");
-                language_config.addDefault("creation.sign.notifikation1", "Please do a right-click on a sign");
-                language_config.addDefault("creation.sign.notifikation2", "Sign accepted");
-                language_config.addDefault("creation.sign.notifikation3", "You have already choosen a sign.");
+                language_config.addDefault("creation.sign.notification1", "Please do a right-click on a sign");
+                language_config.addDefault("creation.sign.notification2", "Sign accepted");
+                language_config.addDefault("creation.sign.notification3", "You have already choosen a sign.");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
