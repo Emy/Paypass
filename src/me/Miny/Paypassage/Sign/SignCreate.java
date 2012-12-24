@@ -14,10 +14,13 @@ public class SignCreate {
     private Location location;
     private String name;
 
-    public SignCreate(Sign sign) {
-        this.sign = sign;
+    public SignCreate() {
     }
 
+    public void setSign(Sign sign) {
+        this.sign = sign;
+    }
+    
     public void setDestination(Location loc) {
         location = loc;
     }
@@ -26,7 +29,16 @@ public class SignCreate {
         this.name = name;
     }
 
-    public void save(final Paypassage plugin) {
+    public void save(final Paypassage plugin) throws InvalidSignCreation {
+        if(sign == null){
+            throw new InvalidSignCreation("You must choose a sign");
+        }
+        if(location == null){
+            throw new InvalidSignCreation("You have to choose a destination first");
+        }
+        if(name.equals("")){
+            throw new InvalidSignCreation("You have to choose an unique name first");
+        }
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {

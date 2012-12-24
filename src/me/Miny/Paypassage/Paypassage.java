@@ -6,6 +6,8 @@ import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Permissions.PermissionsUtility;
 import me.Miny.Paypassage.Report.ReportToHost;
+import me.Miny.Paypassage.Sign.ListofCreations;
+import me.Miny.Paypassage.Sign.SignCreate;
 import me.Miny.Paypassage.config.ConfigurationHandler;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import me.Miny.Paypassage.update.Update;
@@ -228,7 +230,7 @@ public class Paypassage extends JavaPlugin {
                 if (args.length == 1) {
                      if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
-                            //start create
+                            ListofCreations.getList().put(player.getName(), new SignCreate());
                             getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("create.sign.notification1"), LoggerUtility.Level.INFO);
                         }
                         return true;

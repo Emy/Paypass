@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
+import me.Miny.Paypassage.Sign.ListofCreations;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -100,6 +101,10 @@ public class PPListener implements org.bukkit.event.Listener {
                             }
                         }
                     });
+                } 
+                if(ListofCreations.getList().containsKey(e.getPlayer().getName())){
+                    ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
+                    plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification2"), LoggerUtility.Level.INFO);
                 }
             }
         }
