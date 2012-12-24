@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.logger.LoggerUtility;
-import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -91,9 +90,10 @@ public class PPListener implements org.bukkit.event.Listener {
                             try {
                                 String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
                                 if(signname.equalsIgnoreCase("Error")){
+                                    //Playernachricht
                                     return;
                                 } else {
-                                    //Get dest
+                                    
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);
