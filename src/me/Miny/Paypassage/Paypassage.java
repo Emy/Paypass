@@ -1,8 +1,6 @@
 package me.Miny.Paypassage;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.Miny.Paypassage.Database.DatabaseTools;
 import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
@@ -46,7 +44,8 @@ public class Paypassage extends JavaPlugin {
         "language",
         "report",
         "denytracking",
-        "allowtracking"
+        "allowtracking",
+        "create"
     };
     
     
@@ -227,11 +226,13 @@ public class Paypassage extends JavaPlugin {
              */
             if (command.getName().equalsIgnoreCase("pp")) {
                 if (args.length == 1) {
-                    if (args[0].equalsIgnoreCase("create")) {
-                        //create Command
-                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage created");
+                     if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
+                        if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
+                            //start create
+                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("create.sign.notification1"), LoggerUtility.Level.INFO);
+                        }
                         return true;
-                    } else if (args[0].equalsIgnoreCase("delete")) {
+                    }else if (args[0].equalsIgnoreCase("delete")) {
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage deleted");
                         return true;
                     } else if (args[0].equalsIgnoreCase("info")) {

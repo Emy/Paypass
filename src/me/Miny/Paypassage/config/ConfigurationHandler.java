@@ -92,6 +92,7 @@ public class ConfigurationHandler {
                 language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" um deine Daten zu anonymisieren");
                 language_config.addDefault("privacy.notification.denied", "Das Plugin speichert nun keine nutzerbezogene Daten mehr");
                 language_config.addDefault("privacy.notification.allowed", "Das Plugin speichert deine Daten, wende Dich an einen Admin um diese z.B. loeschen zu lassen");
+                language_config.addDefault("creation.sign.notifikation1", "Bitte mache einen rechtsklick auf das Schild");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
@@ -107,6 +108,12 @@ public class ConfigurationHandler {
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Erlaubt dem Plugin deine Daten zu speichern");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
+                
+                language_config.addDefault("commands.allowtracking.name", "create");
+                language_config.addDefault("commands.allowtracking.permission", "Paypassage.create");
+                language_config.addDefault("commands.allowtracking.description", "Erstellt ein neues Paypassage Schild");
+                language_config.addDefault("commands.allowtracking.usage", "/pp create");
+                
             } else {
                 language_config.addDefault("permission.error", "we have a problem! You musnt do this!");
                 language_config.addDefault("privacy.notification.1", "this plugin saves your interact events to a log");
@@ -114,6 +121,7 @@ public class ConfigurationHandler {
                 language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" to anonymise your data");
                 language_config.addDefault("privacy.notification.denied", "The plugin anonymises your data now");
                 language_config.addDefault("privacy.notification.allowed", "The plugin saves your data now, to delete the data, please tell an admin");
+                language_config.addDefault("creation.sign.notifikation1", "Please do a right-click on a sign");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
@@ -129,6 +137,11 @@ public class ConfigurationHandler {
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Allows the plugin to save userdata");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
+                
+                language_config.addDefault("commands.allowtracking.name", "create");
+                language_config.addDefault("commands.allowtracking.permission", "Paypassage.create");
+                language_config.addDefault("commands.allowtracking.description", "Creates a new Paypassage sign");
+                language_config.addDefault("commands.allowtracking.usage", "/pp create");
             }
             try {
                 language_config.options().copyDefaults(true);
