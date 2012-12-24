@@ -17,6 +17,20 @@ public class SignCreate {
     public SignCreate() {
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Sign getSign() {
+        return sign;
+    }
+    
+    
+
     public void setSign(Sign sign) {
         this.sign = sign;
     }

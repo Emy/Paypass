@@ -92,8 +92,9 @@ public class ConfigurationHandler {
                 language_config.addDefault("privacy.notification.3", "\"/pp denytracking\" um deine Daten zu anonymisieren");
                 language_config.addDefault("privacy.notification.denied", "Das Plugin speichert nun keine nutzerbezogene Daten mehr");
                 language_config.addDefault("privacy.notification.allowed", "Das Plugin speichert deine Daten, wende Dich an einen Admin um diese z.B. loeschen zu lassen");
-                language_config.addDefault("creation.sign.notifikation1", "Bitte mache einen rechtsklick auf das Schild");
-                language_config.addDefault("creation.sign.notifikation1", "Schild akzeptiert");
+                language_config.addDefault("creation.sign.notification1", "Bitte mache einen rechtsklick auf das Schild");
+                language_config.addDefault("creation.sign.notification2", "Schild akzeptiert");
+                language_config.addDefault("creation.sign.notification3", "Du hast bereits ein Schild ausgewaehlt.");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
@@ -124,6 +125,7 @@ public class ConfigurationHandler {
                 language_config.addDefault("privacy.notification.allowed", "The plugin saves your data now, to delete the data, please tell an admin");
                 language_config.addDefault("creation.sign.notifikation1", "Please do a right-click on a sign");
                 language_config.addDefault("creation.sign.notifikation2", "Sign accepted");
+                language_config.addDefault("creation.sign.notifikation3", "You have already choosen a sign.");
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");

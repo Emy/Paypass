@@ -90,21 +90,24 @@ public class PPListener implements org.bukkit.event.Listener {
                         public void run() {
                             try {
                                 String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
-                                if(signname.equalsIgnoreCase("Error")){
+                                if (signname.equalsIgnoreCase("Error")) {
                                     //Playernachricht
                                     return;
                                 } else {
-                                    
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     });
-                } 
-                if(ListofCreations.getList().containsKey(e.getPlayer().getName())){
-                    ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
-                    plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification2"), LoggerUtility.Level.INFO);
+                }
+                if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
+                    if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() != null) {
+                        ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
+                        plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification2"), LoggerUtility.Level.INFO);
+                    } else {
+                        plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification3"), LoggerUtility.Level.ERROR);
+                    }
                 }
             }
         }
