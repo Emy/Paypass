@@ -110,10 +110,10 @@ public class ConfigurationHandler {
                 language_config.addDefault("commands.allowtracking.description", "Erlaubt dem Plugin deine Daten zu speichern");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
                 
-                language_config.addDefault("commands.allowtracking.name", "create");
-                language_config.addDefault("commands.allowtracking.permission", "Paypassage.create");
-                language_config.addDefault("commands.allowtracking.description", "Erstellt ein neues Paypassage Schild");
-                language_config.addDefault("commands.allowtracking.usage", "/pp create");
+                language_config.addDefault("commands.create.name", "create");
+                language_config.addDefault("commands.create.permission", "Paypassage.create");
+                language_config.addDefault("commands.create.description", "Erstellt ein neues Paypassage Schild");
+                language_config.addDefault("commands.create.usage", "/pp create");
                 
             } else {
                 language_config.addDefault("permission.error", "we have a problem! You musnt do this!");
@@ -140,10 +140,10 @@ public class ConfigurationHandler {
                 language_config.addDefault("commands.allowtracking.description", "Allows the plugin to save userdata");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
                 
-                language_config.addDefault("commands.allowtracking.name", "create");
-                language_config.addDefault("commands.allowtracking.permission", "Paypassage.create");
-                language_config.addDefault("commands.allowtracking.description", "Creates a new Paypassage sign");
-                language_config.addDefault("commands.allowtracking.usage", "/pp create");
+                language_config.addDefault("commands.create.name", "create");
+                language_config.addDefault("commands.create.permission", "Paypassage.create");
+                language_config.addDefault("commands.create.description", "Creates a new Paypassage sign");
+                language_config.addDefault("commands.create.usage", "/pp create");
             }
             try {
                 language_config.options().copyDefaults(true);
