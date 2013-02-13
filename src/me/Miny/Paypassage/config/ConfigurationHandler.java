@@ -18,6 +18,7 @@ public class ConfigurationHandler {
 
     /**
      * Creates a new ConfigurationHandler
+     *
      * @param plugin Needed for saving configs
      */
     public ConfigurationHandler(Paypassage plugin) {
@@ -26,15 +27,15 @@ public class ConfigurationHandler {
 
     /**
      * Returns the current language configuration
+     *
      * @return YamlConfiguration
      */
     public YamlConfiguration getLanguage_config() {
         return language_config;
     }
 
-    
     /**
-     * 
+     *
      * @return plugin.getConifg();
      */
     public FileConfiguration getConfig() {
@@ -43,6 +44,7 @@ public class ConfigurationHandler {
 
     /**
      * Called on start
+     *
      * @return true if config was successfully loaded, false if it failed;
      */
     public boolean onStart() {
@@ -95,27 +97,36 @@ public class ConfigurationHandler {
                 language_config.addDefault("creation.sign.notification1", "Bitte mache einen rechtsklick auf das Schild");
                 language_config.addDefault("creation.sign.notification2", "Schild akzeptiert");
                 language_config.addDefault("creation.sign.notification3", "Du hast bereits ein Schild ausgewaehlt.");
+                language_config.addDefault("creation.sign.notification4", "Bitte gehe zum Zielpunkt und mache \"pp setdestination\"");
+                language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt");
+                language_config.addDefault("creation.sign.nopaypassagesign", "Du musst ein \"[Paypassage]\" Schild auswählen");
+
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
                 language_config.addDefault("commands.reload.description", "Laedt das Plugin neu");
                 language_config.addDefault("commands.reload.usage", "/pp reload");
-                
+
                 language_config.addDefault("commands.denytracking.name", "denytracking");
                 language_config.addDefault("commands.denytracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.denytracking.description", "Zwingt das Plugin deine Daten zu anonymisieren");
                 language_config.addDefault("commands.denytracking.usage", "/pp denytracking");
-                
+
                 language_config.addDefault("commands.allowtracking.name", "allowtracking");
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Erlaubt dem Plugin deine Daten zu speichern");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
-                
+
                 language_config.addDefault("commands.create.name", "create");
                 language_config.addDefault("commands.create.permission", "Paypassage.create");
                 language_config.addDefault("commands.create.description", "Erstellt ein neues Paypassage Schild");
                 language_config.addDefault("commands.create.usage", "/pp create");
-                
+
+
+                language_config.addDefault("commands.setdestination.name", "setdestination");
+                language_config.addDefault("commands.setdestination.permission", "Paypassage.create");
+                language_config.addDefault("commands.setdestination.description", "Setz Zielpunkt des Teleports.");
+                language_config.addDefault("commands.setdestination.usage", "/pp setdestination");
             } else {
                 language_config.addDefault("permission.error", "we have a problem! You musnt do this!");
                 language_config.addDefault("privacy.notification.1", "this plugin saves your interact events to a log");
@@ -126,26 +137,37 @@ public class ConfigurationHandler {
                 language_config.addDefault("creation.sign.notification1", "Please do a right-click on a sign");
                 language_config.addDefault("creation.sign.notification2", "Sign accepted");
                 language_config.addDefault("creation.sign.notification3", "You have already choosen a sign.");
+                language_config.addDefault("creation.sign.notification4", "Please go to the destination and do \"/pp setdestination\"");
+                language_config.addDefault("creation.sign.notification5", "Destination set!");
+                language_config.addDefault("creation.sign.nopaypassagesign", "You must choose a \"[Paypassage]\" sign!");
+
                 //reload command
                 language_config.addDefault("commands.reload.name", "reload");
                 language_config.addDefault("commands.reload.permission", "Paypassage.reload");
                 language_config.addDefault("commands.reload.description", "Reloads the plugin");
                 language_config.addDefault("commands.reload.usage", "/pp reload");
-                
+
                 language_config.addDefault("commands.denytracking.name", "denytracking");
                 language_config.addDefault("commands.denytracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.denytracking.description", "forces the plugin to anonymise your data");
                 language_config.addDefault("commands.denytracking.usage", "/pp denytracking");
-                
+
                 language_config.addDefault("commands.allowtracking.name", "allowtracking");
                 language_config.addDefault("commands.allowtracking.permission", "Paypassage.user");
                 language_config.addDefault("commands.allowtracking.description", "Allows the plugin to save userdata");
                 language_config.addDefault("commands.allowtracking.usage", "/pp allowtracking");
-                
+
                 language_config.addDefault("commands.create.name", "create");
                 language_config.addDefault("commands.create.permission", "Paypassage.create");
                 language_config.addDefault("commands.create.description", "Creates a new Paypassage sign");
                 language_config.addDefault("commands.create.usage", "/pp create");
+
+                language_config.addDefault("commands.setdestination.name", "setdestination");
+                language_config.addDefault("commands.setdestination.permission", "Paypassage.create");
+                language_config.addDefault("commands.setdestination.description", "Sets destination of a Paypassage sign");
+                language_config.addDefault("commands.setdestination.usage", "/pp setdestination");
+
+
             }
             try {
                 language_config.options().copyDefaults(true);

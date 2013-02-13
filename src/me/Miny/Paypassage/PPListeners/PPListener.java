@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.Sign.ListofCreations;
 import me.Miny.Paypassage.logger.LoggerUtility;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -102,11 +103,16 @@ public class PPListener implements org.bukkit.event.Listener {
                     });
                 }
                 if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
-                    if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() != null) {
-                        ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
-                        plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification2"), LoggerUtility.Level.INFO);
+                    if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() == null) {
+                        if (((Sign) e.getClickedBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
+                            ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
+                            plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification2"), LoggerUtility.Level.INFO);
+                            plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification4"), LoggerUtility.Level.INFO);
+                        } else {
+                            plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.nopaypassagesign"), LoggerUtility.Level.INFO);
+                        }
                     } else {
-                        plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("create.sign.notification3"), LoggerUtility.Level.ERROR);
+                        plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification3"), LoggerUtility.Level.ERROR);
                     }
                 }
             }

@@ -1,6 +1,8 @@
 package me.Miny.Paypassage;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import me.Miny.Paypassage.Database.DatabaseTools;
 import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
@@ -16,6 +18,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -49,8 +53,6 @@ public class Paypassage extends JavaPlugin {
         "allowtracking",
         "create"
     };
-    
-    
 
     public String[] getCommands() {
         return commands;
@@ -67,7 +69,7 @@ public class Paypassage extends JavaPlugin {
         }
         return report;
     }
-    
+
     public DatabaseUtility getDatabaseUtility() {
         if (databaseUtility == null) {
             databaseUtility = new DatabaseUtility(this);
@@ -76,12 +78,12 @@ public class Paypassage extends JavaPlugin {
     }
 
     public PPListener getListener() {
-        if(listener == null){
+        if (listener == null) {
             listener = new PPListener(this);
         }
         return listener;
     }
-    
+
     public Utilities getPluginManager() {
         if (pluginmanager == null) {
             pluginmanager = new Utilities(this);
@@ -228,17 +230,35 @@ public class Paypassage extends JavaPlugin {
              */
             if (command.getName().equalsIgnoreCase("pp")) {
                 if (args.length == 1) {
-                     if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
+                    if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
                             ListofCreations.getList().put(player.getName(), new SignCreate());
-                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("create.sign.notification1"), LoggerUtility.Level.INFO);
+                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification1"), LoggerUtility.Level.INFO);
                         }
                         return true;
-                    }else if (args[0].equalsIgnoreCase("delete")) {
+                    } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setdestination.name"))) {
+                        if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setdestination.permission"))) {
+                            ListofCreations.getList().get(player.getName()).setDestination(player.getLocation());
+                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("delete")) {
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage deleted");
                         return true;
                     } else if (args[0].equalsIgnoreCase("info")) {
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Status:" + ChatColor.GREEN + "Working!");
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("reload")) {
+                        if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.reload.permission"))) {
+                            try {
+                                getLoggerUtility().log(player, "Please wait: Reloading this plugin!", LoggerUtility.Level.WARNING);
+                                getPluginManager().unloadPlugin("BookShop");
+                                getPluginManager().loadPlugin("BookShop");
+                                getLoggerUtility().log(player, "Reloaded!", LoggerUtility.Level.INFO);
+                            } catch (InvalidPluginException | InvalidDescriptionException | NoSuchFieldException | IllegalAccessException ex) {
+                                Logger.getLogger(Paypassage.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                         return true;
                     } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.denytracking.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.denytracking.permission"))) {
@@ -259,7 +279,6 @@ public class Paypassage extends JavaPlugin {
                         }
                         return true;
                     } else {
-                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.RED + "Du hast irgendetwas falsch gemacht!");
                         return false;
                     }
                 }
