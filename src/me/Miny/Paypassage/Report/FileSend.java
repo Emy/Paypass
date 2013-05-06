@@ -23,7 +23,7 @@ public class FileSend {
     }
 
     public void sendDebugFile(final String errorid) throws IOException {
-        this.plugin.getServer().getScheduler().scheduleAsyncDelayedTask(this.plugin, new Runnable() {
+        this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, new Runnable() {
             @Override
             public void run() {
                 try {
@@ -66,6 +66,6 @@ public class FileSend {
                     plugin.getLoggerUtility().log("May you used /reload and therefore it doesnt work.", LoggerUtility.Level.ERROR);
                 }
             }
-        }, 0L);
+        });
     }
 }

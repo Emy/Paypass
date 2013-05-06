@@ -105,7 +105,6 @@ public class DatabaseUtility {
         Statement st = null;
         String sql;
         ResultSet result;
-        String Name = "";
         try {
             st = connector.getConnection().createStatement();
         } catch (SQLException e) {

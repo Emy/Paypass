@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.Sign.ListofCreations;
 import me.Miny.Paypassage.logger.LoggerUtility;
-import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

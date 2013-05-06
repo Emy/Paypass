@@ -7,7 +7,9 @@ package me.Miny.Paypassage.Sign;
  */
 public class InvalidSignCreation extends Exception {
 
-    public InvalidSignCreation(String msg) {
+	private static final long serialVersionUID = 1L;
+
+	public InvalidSignCreation(String msg) {
         super(msg);
     }
 }
