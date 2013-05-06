@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.Sign.ListofCreations;
+import me.Miny.Paypassage.Sign.ListofUsers;
 import me.Miny.Paypassage.Sign.PPSign;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.block.Sign;
@@ -95,9 +96,21 @@ public class PPListener implements org.bukkit.event.Listener {
 									// TODO: Error handling
 									return;
 								} else {
-									// TODO: Teleport, Economy
 									PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());
-									plugin.getLoggerUtility().log(event.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("interact.sign.notification.confirm"), LoggerUtility.Level.WARNING);
+									if (!ListofUsers.getList().containsKey(event.getPlayer())) {
+										ListofUsers.getList().put(event.getPlayer().getName(), sign);
+									}
+									plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+
+										@Override
+										public void run() {
+											if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
+												ListofUsers.getList().remove(event.getPlayer().getName());
+												plugin.getLoggerUtility().log(event.getPlayer(), "Teleport canceled!", LoggerUtility.Level.ERROR);
+											}
+										}
+									}, 20 * 20);
+									plugin.getLoggerUtility().log(event.getPlayer(), String.format(plugin.getConfigHandler().getLanguage_config().getString("interact.sign.notification.confirm"), sign.getPrice()), LoggerUtility.Level.WARNING);
 								}
 							} catch (SQLException ex) {
 								Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);

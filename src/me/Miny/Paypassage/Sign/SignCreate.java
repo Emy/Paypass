@@ -8,8 +8,8 @@ import me.Miny.Paypassage.Paypassage;
  */
 public class SignCreate extends PPSign{
 
-    public SignCreate() {
-    	super();
+    public SignCreate(String owner) {
+    	super(owner);
     }
 
     /**

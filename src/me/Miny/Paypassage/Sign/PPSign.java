@@ -6,11 +6,13 @@ import org.bukkit.block.Sign;
 public class PPSign {
 
 	private Sign sign;
+	private String owner;
     private Location destination;
     private String name;
     private double price = -1;
 
-    public PPSign() {
+    public PPSign(String owner) {
+    	this.setOwner(owner);
     }
 
     public Location getDestination() {
@@ -43,6 +45,14 @@ public class PPSign {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 }

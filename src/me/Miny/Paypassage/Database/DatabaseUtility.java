@@ -37,16 +37,17 @@ public class DatabaseUtility {
 				plugin.getLoggerUtility().log("Insert sign into table!", LoggerUtility.Level.DEBUG);
 				time = System.nanoTime();
 				try {
-					PreparedStatement ps = connector.getConnection().prepareStatement("INSERT INTO PaypassageSigns (" + "Name," + "World," + "Price," + "Sign_X," + "Sign_Y," + "Sign_Z," + "Destination_X," + "Destination_Y," + "Destination_Z) VALUES (?,?,?,?,?,?,?,?,?)");
+					PreparedStatement ps = connector.getConnection().prepareStatement("INSERT INTO PaypassageSigns (" + "Name," + "World," + "Owner," + "Price," + "Sign_X," + "Sign_Y," + "Sign_Z," + "Destination_X," + "Destination_Y," + "Destination_Z) VALUES (?,?,?,?,?,?,?,?,?)");
 					ps.setString(1, sign.getName());
 					ps.setString(2, sign.getDestination().getWorld().getName());
-					ps.setDouble(3, sign.getPrice());
-					ps.setInt(4, sign.getSign().getLocation().getBlockX());
-					ps.setInt(5, sign.getSign().getLocation().getBlockY());
-					ps.setInt(6, sign.getSign().getLocation().getBlockZ());
-					ps.setInt(7, sign.getDestination().getBlockX());
-					ps.setInt(8, sign.getDestination().getBlockY());
-					ps.setInt(9, sign.getDestination().getBlockZ());
+					ps.setString(3, sign.getOwner());
+					ps.setDouble(4, sign.getPrice());
+					ps.setInt(5, sign.getSign().getLocation().getBlockX());
+					ps.setInt(6, sign.getSign().getLocation().getBlockY());
+					ps.setInt(7, sign.getSign().getLocation().getBlockZ());
+					ps.setInt(8, sign.getDestination().getBlockX());
+					ps.setInt(9, sign.getDestination().getBlockY());
+					ps.setInt(10, sign.getDestination().getBlockZ());
 					ps.execute();
 					connector.getConnection().commit();
 					ps.close();
@@ -67,10 +68,10 @@ public class DatabaseUtility {
 		time = System.nanoTime();
 		st = connector.getConnection().createStatement();
 		if (plugin.getConfig().getBoolean("use_MySQL")) {
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR(100) NOT NULL, "+ "PRIMARY KEY(Name), " + "World VARCHAR(100) NOT NULL, " + "Price DOUBLE, " + "Sign_X int, " + "Sign_Y int, " + "Sign_Z int, " + "Destination_X int, " + "Destination_Y int, " + "Destination_Z int);");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR(100) NOT NULL, "+ "PRIMARY KEY(Name), " + "World VARCHAR(100) NOT NULL, " + "Owner VARCHAR(30), " + "Price DOUBLE, " + "Sign_X int, " + "Sign_Y int, " + "Sign_Z int, " + "Destination_X int, " + "Destination_Y int, " + "Destination_Z int);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		} else {
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR PRIMARY KEY NOT NULL, " + "World VARCHAR PRIMARY KEY NOT NULL, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR PRIMARY KEY NOT NULL, " + "World VARCHAR PRIMARY KEY NOT NULL, " + "Owner VARCHAR, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		}
 		connector.getConnection().commit();
@@ -170,9 +171,10 @@ public class DatabaseUtility {
 		}
 		sql = "SELECT * from PaypassageSigns WHERE " + "Sign_X='" + sign_loc.getBlockX() + "'" + "Sign_Y='" + sign_loc.getBlockY() + "'" + "Sign_Z='" + sign_loc.getBlockZ() + "'" + ";";
 		result = st.executeQuery(sql);
-		PPSign sign = new PPSign();
+		PPSign sign = null;
 		try {
 			while (result.next() == true) {
+				sign = new PPSign(result.getString("Owner"));
 				sign.setName(result.getString("Name"));
 				sign.setDestination(new Location(plugin.getServer().getWorld(result.getString("World")), result.getInt("Destination_X"), result.getInt("Destination_Y"), result.getInt("Destination_Z")));
 				sign.setPrice(result.getDouble("Price"));

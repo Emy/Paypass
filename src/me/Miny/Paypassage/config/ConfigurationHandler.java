@@ -102,6 +102,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification3", "Du hast bereits ein Schild ausgewaehlt.");
 				language_config.addDefault("creation.sign.notification4", "Bitte gehe zum Zielpunkt und mache \"pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt. Waehle nun einen Preis mit /pp setprice [Preis]");
+				
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
 				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
 				
@@ -110,7 +111,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("interact.sign.notification.error.nomoney", "Du hast nicht genug [Geldeinheit]!");
 
 				
-				language_config.addDefault("creation.sign.nopaypassagesign", "Du musst ein \"[Paypassage]\" Schild auswählen");
+				language_config.addDefault("creation.sign.nopaypassagesign", "Du musst ein \"[Paypassage]\" Schild auswaehlen");
 
 				// reload command
 				language_config.addDefault("commands.reload.name", "reload");
@@ -135,6 +136,11 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.permission", "Paypassage.create");
 				language_config.addDefault("commands.create.description", "Erstellt ein neues Paypassage Schild");
 				language_config.addDefault("commands.create.usage", "/pp create");
+				
+				language_config.addDefault("commands.confirm.name", "confirm");
+				language_config.addDefault("commands.confirm.permission", "Paypassage.confirm");
+				language_config.addDefault("commands.confirm.description", "Confirms a teleport");
+				language_config.addDefault("commands.confirm.usage", "/pp confirm");
 
 				// cancel command
 				language_config.addDefault("commands.cancel.name", "cancel");
@@ -168,9 +174,14 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification3", "You have already choosen a sign.");
 				language_config.addDefault("creation.sign.notification4", "Please go to the destination and do \"/pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Destination set! Please choose the price with /pp setprice [price]");
+				
 				language_config.addDefault("creation.sign.notification.cancel", "Canceled creation off a PP sign!");
 				language_config.addDefault("creation.sign.notification.success", "PP sign created.");
 
+				language_config.addDefault("interact.sign.notification.confirm", "Do you want to teleport you for %f [Money]?");
+				language_config.addDefault("interact.sign.notification.success", "Teleported!");
+				language_config.addDefault("interact.sign.notification.error.nomoney", "You haven't got enough money to use this sign!");
+				
 				
 				language_config.addDefault("creation.sign.nopaypassagesign", "You must choose a \"[Paypassage]\" sign!");
 
@@ -194,6 +205,11 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.permission", "Paypassage.create");
 				language_config.addDefault("commands.create.description", "Creates a new Paypassage sign");
 				language_config.addDefault("commands.create.usage", "/pp create");
+				
+				language_config.addDefault("commands.confirm.name", "confirm");
+				language_config.addDefault("commands.confirm.permission", "Paypassage.confirm");
+				language_config.addDefault("commands.confirm.description", "Confirms a teleport");
+				language_config.addDefault("commands.confirm.usage", "/pp confirm");
 				
 				// cancel command
 				language_config.addDefault("commands.cancel.name", "cancel");
