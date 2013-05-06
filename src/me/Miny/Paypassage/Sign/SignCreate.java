@@ -43,6 +43,11 @@ public class SignCreate {
         this.name = name;
     }
 
+    /**
+     * Saves the selected destination, sign and name to the DB
+     * @param plugin Needed for the scheduler and the DB connection
+     * @throws InvalidSignCreation if one value is NOT set.
+     */
     public void save(final Paypassage plugin) throws InvalidSignCreation {
         if(sign == null){
             throw new InvalidSignCreation("You must choose a sign");

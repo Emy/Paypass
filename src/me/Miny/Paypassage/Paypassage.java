@@ -8,6 +8,7 @@ import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Permissions.PermissionsUtility;
 import me.Miny.Paypassage.Report.ReportToHost;
+import me.Miny.Paypassage.Sign.InvalidSignCreation;
 import me.Miny.Paypassage.Sign.ListofCreations;
 import me.Miny.Paypassage.Sign.SignCreate;
 import me.Miny.Paypassage.config.ConfigurationHandler;
@@ -245,11 +246,14 @@ public class Paypassage extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setdestination.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setdestination.permission"))) {
                             ListofCreations.getList().get(player.getName()).setDestination(player.getLocation());
+                            try {
+								ListofCreations.getList().get(player.getName()).save(this);
+								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.success"), LoggerUtility.Level.INFO);
+							} catch (InvalidSignCreation e) {
+								getLoggerUtility().log(player, e.getMessage(), LoggerUtility.Level.ERROR);
+							}
                             getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
                         }
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("delete")) {
-                        player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage deleted");
                         return true;
                     } else if (args[0].equalsIgnoreCase("info")) {
                         player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Status:" + ChatColor.GREEN + "Working!");

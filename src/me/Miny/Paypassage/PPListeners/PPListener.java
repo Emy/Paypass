@@ -91,9 +91,10 @@ public class PPListener implements org.bukkit.event.Listener {
                             try {
                                 String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
                                 if (signname.equalsIgnoreCase("Error")) {
-                                    //Playernachricht
+                                    // TODO: Error handling
                                     return;
                                 } else {
+                                	// TODO: Teleport, Economy
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);

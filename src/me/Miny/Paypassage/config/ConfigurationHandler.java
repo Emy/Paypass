@@ -103,6 +103,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification4", "Bitte gehe zum Zielpunkt und mache \"pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt");
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
+				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
 
 				
 				language_config.addDefault("creation.sign.nopaypassagesign", "Du musst ein \"[Paypassage]\" Schild auswählen");
@@ -159,6 +160,8 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification4", "Please go to the destination and do \"/pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Destination set!");
 				language_config.addDefault("creation.sign.notification.cancel", "Canceled creation off a PP sign!");
+				language_config.addDefault("creation.sign.notification.success", "PP sign created.");
+
 				
 				language_config.addDefault("creation.sign.nopaypassagesign", "You must choose a \"[Paypassage]\" sign!");
 
