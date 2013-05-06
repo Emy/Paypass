@@ -246,6 +246,23 @@ public class Paypassage extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setdestination.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setdestination.permission"))) {
                             ListofCreations.getList().get(player.getName()).setDestination(player.getLocation());
+                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
+                        }
+                        return true;
+                    }  else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setprice.name"))) {
+                        if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setprice.permission"))) {
+                        	double price = -1;
+                        	try {
+								price = Integer.parseInt(args[1]);
+							} catch (Exception e) {
+								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
+								return true;
+							}
+                        	if(price >= 0) {
+                        		getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
+								return true;
+                        	}
+                            ListofCreations.getList().get(player.getName()).setPrice(price);
                             try {
 								ListofCreations.getList().get(player.getName()).save(this);
 								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.success"), LoggerUtility.Level.INFO);

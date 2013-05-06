@@ -6,15 +6,15 @@ import org.bukkit.block.Sign;
 public class PPSign {
 
 	private Sign sign;
-    private Location location;
+    private Location destination;
     private String name;
     private double price = -1;
 
     public PPSign() {
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getDestination() {
+        return destination;
     }
 
     public String getName() {
@@ -30,7 +30,7 @@ public class PPSign {
     }
     
     public void setDestination(Location loc) {
-        location = loc;
+        destination = loc;
     }
 
     public void setName(String name) {

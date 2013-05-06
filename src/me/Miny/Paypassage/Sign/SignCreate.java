@@ -1,8 +1,6 @@
 package me.Miny.Paypassage.Sign;
 
 import me.Miny.Paypassage.Paypassage;
-import org.bukkit.Location;
-import org.bukkit.block.Sign;
 
 /**
  *
@@ -20,26 +18,23 @@ public class SignCreate extends PPSign{
      * @throws InvalidSignCreation if one value is NOT set.
      */
     public void save(final Paypassage plugin) throws InvalidSignCreation {
-    	final Sign sign = super.getSign();
-    	final Location location = super.getLocation();
-    	final String name = super.getName();
-    	final double price = super.getPrice();
-        if(sign == null){
+        if(super.getSign() == null){
             throw new InvalidSignCreation("You must choose a sign");
         }
-        if(location == null){
+        if(super.getDestination() == null){
             throw new InvalidSignCreation("You have to choose a destination first");
         }
-        if(name.equals("")){
+        if(super.getName().equals("")){
             throw new InvalidSignCreation("You have to choose an unique name first");
         }
-        if(price == -1){
+        if(super.getPrice() == -1){
             throw new InvalidSignCreation("You have to choose a price first");
         }
+        final PPSign thisinstance = this;
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getDatabaseUtility().insertNewSign(sign.getLocation(), location, name);
+                plugin.getDatabaseUtility().insertNewSign(thisinstance);
             }
         });
     }
