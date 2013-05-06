@@ -60,7 +60,6 @@ public class DatabaseUtility {
 		});
 	}
 
-	// TODO : World
 	public void PrepareDB() throws SQLException {
 		Statement st = null;
 		long time = 0;
@@ -71,7 +70,7 @@ public class DatabaseUtility {
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR(100) NOT NULL, "+ "PRIMARY KEY(Name), " + "World VARCHAR(100) NOT NULL, " + "Owner VARCHAR(30), " + "Price DOUBLE, " + "Sign_X int, " + "Sign_Y int, " + "Sign_Z int, " + "Destination_X int, " + "Destination_Y int, " + "Destination_Z int);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		} else {
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR PRIMARY KEY NOT NULL, " + "World VARCHAR PRIMARY KEY NOT NULL, " + "Owner VARCHAR, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR PRIMARY KEY NOT NULL, " + "World VARCHAR NOT NULL, " + "Owner VARCHAR, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		}
 		connector.getConnection().commit();
@@ -94,7 +93,7 @@ public class DatabaseUtility {
 		} catch (SQLException e) {
 			DatabaseTools.SQLErrorHandler(plugin, e);
 		}
-		sql = "SELECT COUNT(Name) from PaypassageSigns WHERE " + "Sign_X='" + sign.getBlockX() + "'" + "Sign_Y='" + sign.getBlockY() + "'" + "Sign_Z='" + sign.getBlockZ() + "'" + ";";
+		sql = "SELECT COUNT(Name) from PaypassageSigns WHERE " + "Sign_X=" + sign.getBlockX() + " AND Sign_Y=" + sign.getBlockY() + " AND Sign_Z=" + sign.getBlockZ();
 		try {
 			result = st.executeQuery(sql);
 		} catch (SQLException e1) {
@@ -132,7 +131,7 @@ public class DatabaseUtility {
 		} catch (SQLException e) {
 			DatabaseTools.SQLErrorHandler(plugin, e);
 		}
-		sql = "SELECT Name from PaypassageSigns WHERE " + "Sign_X='" + sign.getBlockX() + "'" + "Sign_Y='" + sign.getBlockY() + "'" + "Sign_Z='" + sign.getBlockZ() + "'" + ";";
+		sql = "SELECT Name from PaypassageSigns WHERE " + "Sign_X=" + sign.getBlockX() + " AND Sign_Y=" + sign.getBlockY() + " AND Sign_Z=" + sign.getBlockZ();
 		result = st.executeQuery(sql);
 		String name = "Error";
 		try {

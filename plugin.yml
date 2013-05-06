@@ -1,7 +1,9 @@
-## YAML Template.
----
-name: Paypass
+name: Paypassage
 version: 1.0
 main: me.Miny.Paypassage.Paypassage
 author: Miny
 website: http://www.miny.de.rs
+commands:
+  pp:
+    description: help of BookShop
+    usage: /pp

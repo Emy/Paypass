@@ -227,13 +227,7 @@ public class Paypassage extends JavaPlugin {
 			 */
 			if (command.getName().equalsIgnoreCase("pp")) {
 				if (args.length == 1) {
-					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
-						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
-							ListofCreations.getList().put(player.getName(), new SignCreate(player.getName()));
-							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification1"), LoggerUtility.Level.INFO);
-						}
-						return true;
-					} else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.cancel.name"))) {
+					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.cancel.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.cancel.permission"))) {
 							ListofCreations.getList().remove(player.getName());
 							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.cancel"), LoggerUtility.Level.INFO);
@@ -262,29 +256,6 @@ public class Paypassage extends JavaPlugin {
 							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
 						}
 						return true;
-					} else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setprice.name"))) {
-						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setprice.permission"))) {
-							double price = -1;
-							try {
-								price = Integer.parseInt(args[1]);
-							} catch (Exception e) {
-								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
-								return true;
-							}
-							if (price >= 0) {
-								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
-								return true;
-							}
-							ListofCreations.getList().get(player.getName()).setPrice(price);
-							try {
-								ListofCreations.getList().get(player.getName()).save(this);
-								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.success"), LoggerUtility.Level.INFO);
-							} catch (InvalidSignCreation e) {
-								getLoggerUtility().log(player, e.getMessage(), LoggerUtility.Level.ERROR);
-							}
-							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
-						}
-						return true;
 					} else if (args[0].equalsIgnoreCase("info")) {
 						player.sendMessage(ChatColor.GRAY + "[Paypassage]" + ChatColor.DARK_AQUA + "Paypassage Status:" + ChatColor.GREEN + "Working!");
 						return true;
@@ -292,8 +263,8 @@ public class Paypassage extends JavaPlugin {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.reload.permission"))) {
 							try {
 								getLoggerUtility().log(player, "Please wait: Reloading this plugin!", LoggerUtility.Level.WARNING);
-								getPluginManager().unloadPlugin("BookShop");
-								getPluginManager().loadPlugin("BookShop");
+								getPluginManager().unloadPlugin("Paypassage");
+								getPluginManager().loadPlugin("Paypassage");
 								getLoggerUtility().log(player, "Reloaded!", LoggerUtility.Level.INFO);
 							} catch (InvalidPluginException | InvalidDescriptionException | NoSuchFieldException | IllegalAccessException ex) {
 								Logger.getLogger(Paypassage.class.getName()).log(Level.SEVERE, null, ex);
@@ -321,6 +292,40 @@ public class Paypassage extends JavaPlugin {
 					} else {
 						return false;
 					}
+				} else if(args.length == 2) {
+					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
+						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
+							ListofCreations.getList().put(player.getName(), new SignCreate(player.getName()));
+							ListofCreations.getList().get(player.getName()).setName(args[1]);
+							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification1"), LoggerUtility.Level.INFO);
+						}
+						return true;
+					} else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setprice.name"))) {
+						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setprice.permission"))) {
+							double price = -1;
+							try {
+								price = Double.parseDouble(args[1]);
+							} catch (Exception e) {
+							}
+							if (price < 0) {
+								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
+								return true;
+							}
+							if(!ListofCreations.getList().containsKey(player.getName())) {
+								getLoggerUtility().log(player, "Start creating a sign with /pp create", LoggerUtility.Level.ERROR);
+								return true;
+							}
+							ListofCreations.getList().get(player.getName()).setPrice(price);
+							try {
+								ListofCreations.getList().get(player.getName()).save(this);
+								ListofCreations.getList().remove(player.getName());
+								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.success"), LoggerUtility.Level.INFO);
+							} catch (InvalidSignCreation e) {
+								getLoggerUtility().log(player, e.getMessage(), LoggerUtility.Level.ERROR);
+							}
+						}
+						return true;
+					} 
 				}
 			}
 		}

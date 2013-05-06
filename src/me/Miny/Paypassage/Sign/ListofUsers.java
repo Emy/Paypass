@@ -10,6 +10,9 @@ public class ListofUsers {
     private static HashMap<String, PPSign> list = new HashMap<>();
 
     public static HashMap<String, PPSign> getList() {
+    	if(list == null) {
+    		list = new HashMap<>();
+    	}
         return list;
     }
 }

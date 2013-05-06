@@ -93,7 +93,7 @@ public class PPListener implements org.bukkit.event.Listener {
 							try {
 								String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
 								if (signname.equalsIgnoreCase("Error")) {
-									// TODO: Error handling
+									plugin.getLoggerUtility().log(event.getPlayer(), "Sign not registered!", LoggerUtility.Level.WARNING);
 									return;
 								} else {
 									PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());

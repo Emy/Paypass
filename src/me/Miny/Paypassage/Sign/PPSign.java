@@ -5,10 +5,10 @@ import org.bukkit.block.Sign;
 
 public class PPSign {
 
-	private Sign sign;
+	private Sign sign = null;
 	private String owner;
-    private Location destination;
-    private String name;
+    private Location destination = null;
+    private String name = "";
     private double price = -1;
 
     public PPSign(String owner) {

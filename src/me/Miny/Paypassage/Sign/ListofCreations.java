@@ -10,6 +10,9 @@ public class ListofCreations {
     private static HashMap<String, SignCreate> list = new HashMap<>();
 
     public static HashMap<String, SignCreate> getList() {
+    	if(list == null) {
+    		list = new HashMap<>();
+    	}
         return list;
     }
 }
