@@ -236,6 +236,12 @@ public class Paypassage extends JavaPlugin {
                             getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification1"), LoggerUtility.Level.INFO);
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.cancel.name"))) {
+                        if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.cancel.permission"))) {
+                        	ListofCreations.getList().remove(player.getName());
+                            getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification.cancel"), LoggerUtility.Level.INFO);
+                        }
+                        return true;
                     } else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setdestination.name"))) {
                         if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setdestination.permission"))) {
                             ListofCreations.getList().get(player.getName()).setDestination(player.getLocation());
