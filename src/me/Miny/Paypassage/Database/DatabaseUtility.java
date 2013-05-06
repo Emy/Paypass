@@ -4,13 +4,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+
 import me.Miny.Paypassage.Paypassage;
+import me.Miny.Paypassage.Sign.PPSign;
 import me.Miny.Paypassage.logger.LoggerUtility;
+
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 /**
  *
- * @author Simon
+ * @author ibhh
  */
 public class DatabaseUtility {
 
@@ -62,6 +74,7 @@ public class DatabaseUtility {
         });
     }
 
+    // TODO : World
     public void PrepareDB() throws SQLException{
         Statement st = null;
         long time = 0;
@@ -75,7 +88,7 @@ public class DatabaseUtility {
                     + "Sign_X int, "
                     + "Sign_Y int, "
                     + "Sign_Z int, "
-                    + " int, "
+                    + "Destination_X int, "
                     + "Destination_Y int, "
                     + "Destination_Z int);");
             plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
@@ -173,4 +186,41 @@ public class DatabaseUtility {
         plugin.getLoggerUtility().log("Finished in " + time + " ms!", LoggerUtility.Level.DEBUG);
         return name;
     }
+    
+    public PPSign getSign(final Location sign_loc) throws SQLException {
+        long time = 0;
+        plugin.getLoggerUtility().log("getting Sign!", LoggerUtility.Level.DEBUG);
+        time = System.nanoTime();
+        Statement st = null;
+        String sql;
+        ResultSet result;
+        try {
+            st = connector.getConnection().createStatement();
+        } catch (SQLException e) {
+            DatabaseTools.SQLErrorHandler(plugin, e);
+        }
+        sql = "SELECT Name from PaypassageSigns WHERE "
+                + "Sign_X='" + sign_loc.getBlockX() + "'"
+                + "Sign_Y='" + sign_loc.getBlockY() + "'"
+                + "Sign_Z='" + sign_loc.getBlockZ() + "'"
+                + ";";
+        result = st.executeQuery(sql);
+        PPSign sign = new PPSign();
+        try {
+            while (result.next() == true) {
+                sign.setName(result.getString("Name"));
+                // TODO: World support
+                sign.setDestination(new Location(world, x, y, z))
+            }
+            connector.getConnection().commit();
+            st.close();
+            result.close();
+        } catch (SQLException e2) {
+            DatabaseTools.SQLErrorHandler(plugin, e2);
+        }
+        time = (System.nanoTime() - time) / 1000000;
+        plugin.getLoggerUtility().log("Finished in " + time + " ms!", LoggerUtility.Level.DEBUG);
+        return sign;
+    }
+    
 }

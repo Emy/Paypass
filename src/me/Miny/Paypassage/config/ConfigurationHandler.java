@@ -104,6 +104,10 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt");
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
 				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
+				
+				language_config.addDefault("interact.sign.notification.confirm", "Willst Du dich für %f [Geldeinheit] teleportieren?");
+				language_config.addDefault("interact.sign.notification.success", "Teleportiert.");
+				language_config.addDefault("interact.sign.notification.error.nomoney", "Du hast nicht genug [Geldeinheit]!");
 
 				
 				language_config.addDefault("creation.sign.nopaypassagesign", "Du musst ein \"[Paypassage]\" Schild auswÃ¤hlen");
