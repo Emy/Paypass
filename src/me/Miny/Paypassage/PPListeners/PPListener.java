@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
 import me.Miny.Paypassage.Sign.ListofCreations;
+import me.Miny.Paypassage.Sign.PPSign;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -95,7 +96,7 @@ public class PPListener implements org.bukkit.event.Listener {
 									return;
 								} else {
 									// TODO: Teleport, Economy
-									
+									PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());
 									plugin.getLoggerUtility().log(event.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("interact.sign.notification.confirm"), LoggerUtility.Level.WARNING);
 								}
 							} catch (SQLException ex) {

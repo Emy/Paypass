@@ -23,6 +23,7 @@ public class SignCreate extends PPSign{
     	final Sign sign = super.getSign();
     	final Location location = super.getLocation();
     	final String name = super.getName();
+    	final double price = super.getPrice();
         if(sign == null){
             throw new InvalidSignCreation("You must choose a sign");
         }
@@ -31,6 +32,9 @@ public class SignCreate extends PPSign{
         }
         if(name.equals("")){
             throw new InvalidSignCreation("You have to choose an unique name first");
+        }
+        if(price == -1){
+            throw new InvalidSignCreation("You have to choose a price first");
         }
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
