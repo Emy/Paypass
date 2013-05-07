@@ -28,6 +28,39 @@ public class DatabaseUtility {
 	public void closeConnection() {
 		connector.CloseCon();
 	}
+	
+	public void deleteSign(final Location loc) {
+		plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+			@Override
+			public void run() {
+				long time = 0;
+				plugin.getLoggerUtility().log("Insert sign into table!", LoggerUtility.Level.DEBUG);
+				time = System.nanoTime();
+				Statement st = null;
+				try {
+					st = connector.getConnection().createStatement();
+				} catch (SQLException e) {
+					DatabaseTools.SQLErrorHandler(plugin, e);
+					return;
+				}
+				try {
+					String sql = "DELETE from PaypassageSigns WHERE " + "Sign_X=" + loc.getX() + " AND Sign_Y=" + loc.getY() + " AND Sign_Z=" + loc.getZ();
+					try {
+						st.executeUpdate(sql);
+					} catch (SQLException e1) {
+						DatabaseTools.SQLErrorHandler(plugin, e1);
+						return;
+					}
+					connector.getConnection().commit();
+					st.close();
+				} catch (SQLException e) {
+					plugin.getLoggerUtility().log("Error while deleting Sign from DB! - " + e.getMessage(), LoggerUtility.Level.DEBUG);
+				}
+				time = (System.nanoTime() - time) / 1000000;
+				plugin.getLoggerUtility().log("Finished in " + time + " ms!", LoggerUtility.Level.DEBUG);
+			}
+		});
+	}
 
 	public void insertNewSign(final PPSign sign) {
 		plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -37,7 +70,7 @@ public class DatabaseUtility {
 				plugin.getLoggerUtility().log("Insert sign into table!", LoggerUtility.Level.DEBUG);
 				time = System.nanoTime();
 				try {
-					PreparedStatement ps = connector.getConnection().prepareStatement("INSERT INTO PaypassageSigns (" + "Name," + "World," + "Owner," + "Price," + "Sign_X," + "Sign_Y," + "Sign_Z," + "Destination_X," + "Destination_Y," + "Destination_Z) VALUES (?,?,?,?,?,?,?,?,?)");
+					PreparedStatement ps = connector.getConnection().prepareStatement("INSERT INTO PaypassageSigns (" + "Name," + "World," + "Owner," + "Price," + "Sign_X," + "Sign_Y," + "Sign_Z," + "Destination_X," + "Destination_Y," + "Destination_Z) VALUES (?,?,?,?,?,?,?,?,?,?)");
 					ps.setString(1, sign.getName());
 					ps.setString(2, sign.getDestination().getWorld().getName());
 					ps.setString(3, sign.getOwner());
@@ -53,6 +86,7 @@ public class DatabaseUtility {
 					ps.close();
 				} catch (SQLException e) {
 					plugin.getLoggerUtility().log("Error while inserting Sign into DB! - " + e.getMessage(), LoggerUtility.Level.DEBUG);
+					plugin.getLoggerUtility().log(plugin.getServer().getPlayer(sign.getOwner()), e.getMessage(), LoggerUtility.Level.ERROR);
 				}
 				time = (System.nanoTime() - time) / 1000000;
 				plugin.getLoggerUtility().log("Finished in " + time + " ms!", LoggerUtility.Level.DEBUG);
@@ -168,7 +202,7 @@ public class DatabaseUtility {
 		} catch (SQLException e) {
 			DatabaseTools.SQLErrorHandler(plugin, e);
 		}
-		sql = "SELECT * from PaypassageSigns WHERE " + "Sign_X='" + sign_loc.getBlockX() + "'" + "Sign_Y='" + sign_loc.getBlockY() + "'" + "Sign_Z='" + sign_loc.getBlockZ() + "'" + ";";
+		sql = "SELECT * from PaypassageSigns WHERE " + "Sign_X=" + sign_loc.getBlockX() + " AND Sign_Y=" + sign_loc.getBlockY() + " AND Sign_Z=" + sign_loc.getBlockZ() + ";";
 		result = st.executeQuery(sql);
 		PPSign sign = null;
 		try {

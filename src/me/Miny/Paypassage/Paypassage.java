@@ -3,7 +3,6 @@ package me.Miny.Paypassage;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import me.Miny.Paypassage.Database.DatabaseTools;
 import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Permissions.PermissionsUtility;
@@ -41,8 +40,9 @@ public class Paypassage extends JavaPlugin {
 	private PPListener listener;
 	private DatabaseUtility databaseUtility;
 	private IConomyHandler iConomyHandler;
+	private Help help;
 	// Commands array
-	private String[] commands = { "help", "debugfile", "internet", "version", "update", "reload", "statuschange", "language", "report", "denytracking", "allowtracking", "create" };
+	private String[] commands = { "help", "version", "reload", "denytracking", "allowtracking", "create", "setdestination", "setprice" };
 
 	public String[] getCommands() {
 		return commands;
@@ -59,6 +59,13 @@ public class Paypassage extends JavaPlugin {
 		}
 		return report;
 	}
+	
+	public Help getHelp() {
+		if(help == null) {
+			help = new Help(this);
+		}
+		return help;
+	}
 
 	public IConomyHandler getiConomyHandler() {
 		if (iConomyHandler == null) {
@@ -70,6 +77,12 @@ public class Paypassage extends JavaPlugin {
 	public DatabaseUtility getDatabaseUtility() {
 		if (databaseUtility == null) {
 			databaseUtility = new DatabaseUtility(this);
+			try {
+				databaseUtility.PrepareDB();
+			} catch (SQLException e) {
+				setEnabled(false);
+				e.printStackTrace();
+			}
 		}
 		return databaseUtility;
 	}
@@ -155,6 +168,7 @@ public class Paypassage extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		setEnabled(false);
+		getDatabaseUtility().closeConnection();
 		getPrivacy().savePrivacyFiles();
 		long time = System.nanoTime();
 		System.out.println("Paypassage disabled in " + ((System.nanoTime() - time) / 1000000) + " ms");
@@ -175,13 +189,7 @@ public class Paypassage extends JavaPlugin {
 		getPermissions();
 		getLoggerUtility().log("init permissions!", LoggerUtility.Level.DEBUG);
 		getLoggerUtility().log("init database!", LoggerUtility.Level.DEBUG);
-		try {
-			getDatabaseUtility().PrepareDB();
-		} catch (SQLException ex) {
-			DatabaseTools.SQLErrorHandler(this, ex);
-			setEnabled(false);
-			return;
-		}
+		getDatabaseUtility();
 		getPrivacy().loadData();
 		getPrivacy().autoSave();
 		getLoggerUtility().log("init privacy control!", LoggerUtility.Level.DEBUG);
@@ -235,7 +243,7 @@ public class Paypassage extends JavaPlugin {
 						return true;
 					} else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.confirm.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.confirm.permission"))) {
-							if (ListofUsers.getList().containsKey(player.getPlayer())) {
+							if (ListofUsers.getList().containsKey(player.getPlayer().getName())) {
 								if (getiConomyHandler().getBalance(player) < ListofUsers.getList().get(player.getName()).getPrice()) {
 									getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("interact.sign.notification.error.nomoney"), LoggerUtility.Level.ERROR);
 									return true;
@@ -247,6 +255,8 @@ public class Paypassage extends JavaPlugin {
 									ListofUsers.getList().remove(player.getName());
 								}
 								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("interact.sign.notification.success"), LoggerUtility.Level.INFO);
+							} else {
+								getLoggerUtility().log(player, "Please hit a sign first!", LoggerUtility.Level.WARNING);
 							}
 						}
 						return true;
@@ -268,6 +278,7 @@ public class Paypassage extends JavaPlugin {
 								getLoggerUtility().log(player, "Reloaded!", LoggerUtility.Level.INFO);
 							} catch (InvalidPluginException | InvalidDescriptionException | NoSuchFieldException | IllegalAccessException ex) {
 								Logger.getLogger(Paypassage.class.getName()).log(Level.SEVERE, null, ex);
+								getLoggerUtility().log(player, ex.getMessage(), LoggerUtility.Level.ERROR);
 							}
 						}
 						return true;
@@ -289,10 +300,8 @@ public class Paypassage extends JavaPlugin {
 							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("privacy.notification.allowed"), LoggerUtility.Level.INFO);
 						}
 						return true;
-					} else {
-						return false;
 					}
-				} else if(args.length == 2) {
+				} else if (args.length == 2) {
 					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
 							ListofCreations.getList().put(player.getName(), new SignCreate(player.getName()));
@@ -311,7 +320,7 @@ public class Paypassage extends JavaPlugin {
 								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
 								return true;
 							}
-							if(!ListofCreations.getList().containsKey(player.getName())) {
+							if (!ListofCreations.getList().containsKey(player.getName())) {
 								getLoggerUtility().log(player, "Start creating a sign with /pp create", LoggerUtility.Level.ERROR);
 								return true;
 							}
@@ -325,8 +334,9 @@ public class Paypassage extends JavaPlugin {
 							}
 						}
 						return true;
-					} 
+					}
 				}
+				getHelp().help(player, args);
 			}
 		}
 		return false;

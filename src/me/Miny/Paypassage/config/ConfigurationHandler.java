@@ -106,7 +106,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
 				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
 				
-				language_config.addDefault("interact.sign.notification.confirm", "Willst Du dich für %f [Geldeinheit] teleportieren?");
+				language_config.addDefault("interact.sign.notification.confirm", "Willst Du dich für %f [Geldeinheit] teleportieren? Bestaetige mit /pp confirm");
 				language_config.addDefault("interact.sign.notification.success", "Teleportiert.");
 				language_config.addDefault("interact.sign.notification.error.nomoney", "Du hast nicht genug [Geldeinheit]!");
 
@@ -118,6 +118,16 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.reload.permission", "Paypassage.reload");
 				language_config.addDefault("commands.reload.description", "Laedt das Plugin neu");
 				language_config.addDefault("commands.reload.usage", "/pp reload");
+				
+				language_config.addDefault("commands.help.name", "help");
+				language_config.addDefault("commands.help.permission", "Paypassage.help");
+				language_config.addDefault("commands.help.description", "Zeigt die Hilfe an");
+				language_config.addDefault("commands.help.usage", "/pp help");
+				
+				language_config.addDefault("commands.version.name", "version");
+				language_config.addDefault("commands.version.permission", "Paypassage.version");
+				language_config.addDefault("commands.version.description", "Zeigt die Version an");
+				language_config.addDefault("commands.version.usage", "/pp help");
 
 				// privacy commands
 				language_config.addDefault("commands.denytracking.name", "denytracking");
@@ -138,8 +148,8 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.usage", "/pp create");
 				
 				language_config.addDefault("commands.confirm.name", "confirm");
-				language_config.addDefault("commands.confirm.permission", "Paypassage.confirm");
-				language_config.addDefault("commands.confirm.description", "Confirms a teleport");
+				language_config.addDefault("commands.confirm.permission", "Paypassage.teleport");
+				language_config.addDefault("commands.confirm.description", "Bestaetigt einen Teleport");
 				language_config.addDefault("commands.confirm.usage", "/pp confirm");
 
 				// cancel command
@@ -178,7 +188,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification.cancel", "Canceled creation off a PP sign!");
 				language_config.addDefault("creation.sign.notification.success", "PP sign created.");
 
-				language_config.addDefault("interact.sign.notification.confirm", "Do you want to teleport you for %f [Money]?");
+				language_config.addDefault("interact.sign.notification.confirm", "Do you want to teleport you for %f [Money]? Please execute /pp confirm");
 				language_config.addDefault("interact.sign.notification.success", "Teleported!");
 				language_config.addDefault("interact.sign.notification.error.nomoney", "You haven't got enough money to use this sign!");
 				
@@ -190,6 +200,16 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.reload.permission", "Paypassage.reload");
 				language_config.addDefault("commands.reload.description", "Reloads the plugin");
 				language_config.addDefault("commands.reload.usage", "/pp reload");
+				
+				language_config.addDefault("commands.help.name", "help");
+				language_config.addDefault("commands.help.permission", "Paypassage.help");
+				language_config.addDefault("commands.help.description", "Shows help");
+				language_config.addDefault("commands.help.usage", "/pp help");
+				
+				language_config.addDefault("commands.version.name", "version");
+				language_config.addDefault("commands.version.permission", "Paypassage.version");
+				language_config.addDefault("commands.version.description", "Shows current version");
+				language_config.addDefault("commands.version.usage", "/pp help");
 
 				language_config.addDefault("commands.denytracking.name", "denytracking");
 				language_config.addDefault("commands.denytracking.permission", "Paypassage.user");
@@ -207,7 +227,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.usage", "/pp create");
 				
 				language_config.addDefault("commands.confirm.name", "confirm");
-				language_config.addDefault("commands.confirm.permission", "Paypassage.confirm");
+				language_config.addDefault("commands.confirm.permission", "Paypassage.teleport");
 				language_config.addDefault("commands.confirm.description", "Confirms a teleport");
 				language_config.addDefault("commands.confirm.usage", "/pp confirm");
 				

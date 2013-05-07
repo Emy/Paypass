@@ -12,6 +12,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -80,7 +81,57 @@ public class PPListener implements org.bukkit.event.Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onBreak(BlockBreakEvent e) {
+		long time = System.nanoTime();
+		if (BlockTools.isSign(e.getBlock())) {
+			this.plugin.getLoggerUtility().log("Block is sign", LoggerUtility.Level.DEBUG);
+			if (((Sign) e.getBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
+				final BlockBreakEvent event = e;
+				plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+					@Override
+					public void run() {
+						try {
+							if (!plugin.getDatabaseUtility().isindb(event.getBlock().getLocation())) {
+								return;
+							} else {
+								PPSign sign = plugin.getDatabaseUtility().getSign(event.getBlock().getLocation());
+								if(!event.getPlayer().getName().equals(sign.getOwner())) {
+									if(!plugin.getPermissions().checkpermissions(event.getPlayer(), "Paypassage.admin")) {
+										event.setCancelled(true);
+										return;
+									}
+								} 
+								plugin.getDatabaseUtility().deleteSign(event.getBlock().getLocation());
+								plugin.getLoggerUtility().log(event.getPlayer(), "PP Sign deleted", LoggerUtility.Level.INFO);
+							}
+						} catch (SQLException ex) {
+							Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+				});
+			}
+			if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
+				if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() == null) {
+					if (((Sign) e.getBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
+						ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getBlock().getState());
+						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification2"), LoggerUtility.Level.INFO);
+						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification4"), LoggerUtility.Level.INFO);
+					} else {
+						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.nopaypassagesign"), LoggerUtility.Level.INFO);
+					}
+				} else {
+					plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification3"), LoggerUtility.Level.ERROR);
+				}
+			}
+		}
+		this.plugin.getLoggerUtility().log("PlayerInteractEvent handled in " + (System.nanoTime() - time) / 1000000 + " ms", LoggerUtility.Level.DEBUG);
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInteract(PlayerInteractEvent e) {
+		if(e.getPlayer().isSneaking()) {
+			return;
+		}
 		long time = System.nanoTime();
 		if (e.hasBlock()) {
 			if (BlockTools.isSign(e.getClickedBlock())) {
@@ -91,15 +142,15 @@ public class PPListener implements org.bukkit.event.Listener {
 						@Override
 						public void run() {
 							try {
-								String signname = plugin.getDatabaseUtility().getSignName(((Sign) event.getClickedBlock().getState()).getLocation());
-								if (signname.equalsIgnoreCase("Error")) {
+								if (!plugin.getDatabaseUtility().isindb(((Sign) event.getClickedBlock().getState()).getLocation())) {
 									plugin.getLoggerUtility().log(event.getPlayer(), "Sign not registered!", LoggerUtility.Level.WARNING);
 									return;
 								} else {
 									PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());
-									if (!ListofUsers.getList().containsKey(event.getPlayer())) {
-										ListofUsers.getList().put(event.getPlayer().getName(), sign);
+									if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
+										ListofUsers.getList().remove(event.getPlayer().getName());
 									}
+									ListofUsers.getList().put(event.getPlayer().getName(), sign);
 									plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
 
 										@Override

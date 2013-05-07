@@ -18,10 +18,13 @@ public class PermissionsUtility {
 			if (player.isOp()) {
 				return true;
 			}
-			return player.hasPermission(action) || player.hasPermission(action.toLowerCase());
+			if (player.hasPermission(action) || player.hasPermission(action.toLowerCase())) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (Exception e) {
-			plugin.getLoggerUtility().log("Error on checking permissions!", LoggerUtility.Level.ERROR);
-			plugin.getReportHandler().report(3328, "Error on checking permissions", e.getMessage(), "PermissionsChecker", e);
+			sendGeneralErrorMessage(player, e);
 			e.printStackTrace();
 			return false;
 		}
