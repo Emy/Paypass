@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import me.Miny.Paypassage.Paypassage;
+import me.Miny.Paypassage.Sign.InvalidSignLocationException;
 import me.Miny.Paypassage.Sign.PPSign;
 import me.Miny.Paypassage.logger.LoggerUtility;
 
@@ -101,10 +102,10 @@ public class DatabaseUtility {
 		time = System.nanoTime();
 		st = connector.getConnection().createStatement();
 		if (plugin.getConfig().getBoolean("use_MySQL")) {
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR(100) NOT NULL, "+ "PRIMARY KEY(Name), " + "World VARCHAR(100) NOT NULL, " + "Owner VARCHAR(30), " + "Price DOUBLE, " + "Sign_X int, " + "Sign_Y int, " + "Sign_Z int, " + "Destination_X int, " + "Destination_Y int, " + "Destination_Z int);");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (ID int AUTO_INCREMENT, PRIMARY KEY(ID)," + "Name VARCHAR(100) NOT NULL, World VARCHAR(100) NOT NULL, " + "Owner VARCHAR(30), " + "Price DOUBLE, " + "Sign_X int, " + "Sign_Y int, " + "Sign_Z int, " + "Destination_X int, " + "Destination_Y int, " + "Destination_Z int);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		} else {
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (" + "Name VARCHAR PRIMARY KEY NOT NULL, " + "World VARCHAR NOT NULL, " + "Owner VARCHAR, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS PaypassageSigns (ID INTEGER PRIMARY KEY AUTOINCREMENT," + "Name VARCHAR NOT NULL, " + "World VARCHAR NOT NULL, " + "Owner VARCHAR, " + "Price DOUBLE, " + "Sign_X INTEGER, " + "Sign_Y INTEGER, " + "Sign_Z INTEGER, " + "Destination_X INTEGER, " + "Destination_Y INTEGER, " + "Destination_Z INTEGER);");
 			plugin.getLoggerUtility().log("Table created!", LoggerUtility.Level.DEBUG);
 		}
 		connector.getConnection().commit();
@@ -153,7 +154,7 @@ public class DatabaseUtility {
 		return a;
 	}
 
-	public String getSignName(final Location sign) throws SQLException {
+	public int getSignID(final Location sign) throws SQLException, InvalidSignLocationException{
 		long time = 0;
 		plugin.getLoggerUtility().log("getting Sign!", LoggerUtility.Level.DEBUG);
 		time = System.nanoTime();
@@ -165,12 +166,12 @@ public class DatabaseUtility {
 		} catch (SQLException e) {
 			DatabaseTools.SQLErrorHandler(plugin, e);
 		}
-		sql = "SELECT Name from PaypassageSigns WHERE " + "Sign_X=" + sign.getBlockX() + " AND Sign_Y=" + sign.getBlockY() + " AND Sign_Z=" + sign.getBlockZ();
+		sql = "SELECT ID from PaypassageSigns WHERE " + "Sign_X=" + sign.getBlockX() + " AND Sign_Y=" + sign.getBlockY() + " AND Sign_Z=" + sign.getBlockZ();
 		result = st.executeQuery(sql);
-		String name = "Error";
+		int id = -1;
 		try {
 			while (result.next() == true) {
-				name = result.getString("Name");
+				id = result.getInt("ID");
 			}
 			connector.getConnection().commit();
 			st.close();
@@ -178,9 +179,12 @@ public class DatabaseUtility {
 		} catch (SQLException e2) {
 			DatabaseTools.SQLErrorHandler(plugin, e2);
 		}
+		if(id == -1) {
+			throw new InvalidSignLocationException("No sign registered at " + sign.getBlockX() + " " + sign.getBlockY() + " " + sign.getBlockZ());
+		}
 		time = (System.nanoTime() - time) / 1000000;
 		plugin.getLoggerUtility().log("Finished in " + time + " ms!", LoggerUtility.Level.DEBUG);
-		return name;
+		return id;
 	}
 
 	/**

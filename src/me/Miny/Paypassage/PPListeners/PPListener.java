@@ -16,20 +16,35 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
- * 
+ * Listener for the Bukkit API
  * @author ibhh
  */
 public class PPListener implements org.bukkit.event.Listener {
 
+	/**
+	 * Reference to the plugin instance
+	 */
 	public Paypassage plugin;
 
 	public PPListener(Paypassage plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerLeft(PlayerQuitEvent e) {
+		if(ListofCreations.getList().containsKey(e.getPlayer().getName())) {
+			ListofCreations.getList().remove(e.getPlayer().getName());
+		}
+	}
 
+	/**
+	 * Recieves join events
+	 * @param event
+	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		long time = System.nanoTime();
@@ -110,19 +125,6 @@ public class PPListener implements org.bukkit.event.Listener {
 					}
 				});
 			}
-			if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
-				if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() == null) {
-					if (((Sign) e.getBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
-						ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getBlock().getState());
-						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification2"), LoggerUtility.Level.INFO);
-						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification4"), LoggerUtility.Level.INFO);
-					} else {
-						plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.nopaypassagesign"), LoggerUtility.Level.INFO);
-					}
-				} else {
-					plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification3"), LoggerUtility.Level.ERROR);
-				}
-			}
 		}
 		this.plugin.getLoggerUtility().log("PlayerInteractEvent handled in " + (System.nanoTime() - time) / 1000000 + " ms", LoggerUtility.Level.DEBUG);
 	}
@@ -172,6 +174,14 @@ public class PPListener implements org.bukkit.event.Listener {
 				if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
 					if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() == null) {
 						if (((Sign) e.getClickedBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
+							try {
+								if (plugin.getDatabaseUtility().isindb(e.getClickedBlock().getLocation())) {
+									plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification21"), LoggerUtility.Level.ERROR);
+									return;
+								}
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
 							ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
 							plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification2"), LoggerUtility.Level.INFO);
 							plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification4"), LoggerUtility.Level.INFO);

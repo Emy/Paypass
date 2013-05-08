@@ -99,9 +99,11 @@ public class ConfigurationHandler {
 				
 				language_config.addDefault("creation.sign.notification1", "Bitte mache einen rechtsklick auf das Schild");
 				language_config.addDefault("creation.sign.notification2", "Schild akzeptiert");
+				language_config.addDefault("creation.sign.notification21", "Schild schon benutzt.");
 				language_config.addDefault("creation.sign.notification3", "Du hast bereits ein Schild ausgewaehlt.");
 				language_config.addDefault("creation.sign.notification4", "Bitte gehe zum Zielpunkt und mache \"pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt. Waehle nun einen Preis mit /pp setprice [Preis]");
+				language_config.addDefault("creation.sign.notification6", "Du erstellst bereits ein PP Schild.");
 				
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
 				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
@@ -127,7 +129,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.version.name", "version");
 				language_config.addDefault("commands.version.permission", "Paypassage.version");
 				language_config.addDefault("commands.version.description", "Zeigt die Version an");
-				language_config.addDefault("commands.version.usage", "/pp help");
+				language_config.addDefault("commands.version.usage", "/pp version");
 
 				// privacy commands
 				language_config.addDefault("commands.denytracking.name", "denytracking");
@@ -181,9 +183,11 @@ public class ConfigurationHandler {
 				
 				language_config.addDefault("creation.sign.notification1", "Please do a right-click on a sign");
 				language_config.addDefault("creation.sign.notification2", "Sign accepted");
+				language_config.addDefault("creation.sign.notification21", "Sign already used.");
 				language_config.addDefault("creation.sign.notification3", "You have already choosen a sign.");
 				language_config.addDefault("creation.sign.notification4", "Please go to the destination and do \"/pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Destination set! Please choose the price with /pp setprice [price]");
+				language_config.addDefault("creation.sign.notification6", "You are currently creating a PP sign.");
 				
 				language_config.addDefault("creation.sign.notification.cancel", "Canceled creation off a PP sign!");
 				language_config.addDefault("creation.sign.notification.success", "PP sign created.");
@@ -209,7 +213,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.version.name", "version");
 				language_config.addDefault("commands.version.permission", "Paypassage.version");
 				language_config.addDefault("commands.version.description", "Shows current version");
-				language_config.addDefault("commands.version.usage", "/pp help");
+				language_config.addDefault("commands.version.usage", "/pp version");
 
 				language_config.addDefault("commands.denytracking.name", "denytracking");
 				language_config.addDefault("commands.denytracking.permission", "Paypassage.user");

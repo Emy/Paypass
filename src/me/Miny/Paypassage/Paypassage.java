@@ -273,8 +273,9 @@ public class Paypassage extends JavaPlugin {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.reload.permission"))) {
 							try {
 								getLoggerUtility().log(player, "Please wait: Reloading this plugin!", LoggerUtility.Level.WARNING);
-								getPluginManager().unloadPlugin("Paypassage");
-								getPluginManager().loadPlugin("Paypassage");
+								Utilities utility = getPluginManager();
+								utility.unloadPlugin("Paypassage");
+								utility.loadPlugin("Paypassage");
 								getLoggerUtility().log(player, "Reloaded!", LoggerUtility.Level.INFO);
 							} catch (InvalidPluginException | InvalidDescriptionException | NoSuchFieldException | IllegalAccessException ex) {
 								Logger.getLogger(Paypassage.class.getName()).log(Level.SEVERE, null, ex);
@@ -301,9 +302,15 @@ public class Paypassage extends JavaPlugin {
 						}
 						return true;
 					}
+					getHelp().help(player, args);
+					return true;
 				} else if (args.length == 2) {
 					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
+							if(ListofCreations.getList().containsKey(player.getName())) {
+								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification6"), LoggerUtility.Level.ERROR);
+								return true;
+							}
 							ListofCreations.getList().put(player.getName(), new SignCreate(player.getName()));
 							ListofCreations.getList().get(player.getName()).setName(args[1]);
 							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification1"), LoggerUtility.Level.INFO);
@@ -321,7 +328,7 @@ public class Paypassage extends JavaPlugin {
 								return true;
 							}
 							if (!ListofCreations.getList().containsKey(player.getName())) {
-								getLoggerUtility().log(player, "Start creating a sign with /pp create", LoggerUtility.Level.ERROR);
+								getLoggerUtility().log(player, "Start creating a sign with /pp create [name]", LoggerUtility.Level.ERROR);
 								return true;
 							}
 							ListofCreations.getList().get(player.getName()).setPrice(price);
@@ -335,8 +342,11 @@ public class Paypassage extends JavaPlugin {
 						}
 						return true;
 					}
+					getHelp().help(player, args);
+					return true;
 				}
 				getHelp().help(player, args);
+				return true;
 			}
 		}
 		return false;
