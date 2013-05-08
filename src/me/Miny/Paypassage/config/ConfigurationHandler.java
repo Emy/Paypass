@@ -104,6 +104,8 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification4", "Bitte gehe zum Zielpunkt und mache \"pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Zielpunkt gesetzt. Waehle nun einen Preis mit /pp setprice [Preis]");
 				language_config.addDefault("creation.sign.notification6", "Du erstellst bereits ein PP Schild.");
+				language_config.addDefault("creation.sign.notification7", "Teleportentfernung zu weit: ");
+				language_config.addDefault("creation.sign.notification8", "Teleportpreis zu gering, min: ");
 				
 				language_config.addDefault("creation.sign.notification.cancel", "Erstellung eines PP Schildes abgebrochen!");
 				language_config.addDefault("creation.sign.notification.success", "Erstellung eines PP Schildes abgeschlossen.");
