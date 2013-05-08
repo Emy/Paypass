@@ -1,11 +1,10 @@
 package me.Miny.Paypassage.Sign;
 
 import org.bukkit.Location;
-import org.bukkit.block.Sign;
 
 public class PPSign {
 
-	private Sign sign = null;
+	private Location sign_loc = null;
 	private String owner;
     private Location destination = null;
     private String name = "";
@@ -23,12 +22,12 @@ public class PPSign {
         return name;
     }
 
-	public Sign getSign() {
-        return sign;
+	public Location getSignLocation() {
+        return sign_loc;
     }
 
-    public void setSign(Sign sign) {
-        this.sign = sign;
+    public void setSignLocation(Location sign) {
+        this.sign_loc = sign;
     }
     
     public void setDestination(Location loc) {

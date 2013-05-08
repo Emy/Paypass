@@ -24,7 +24,8 @@ public class FileSend {
 
     public void sendDebugFile(final String errorid) throws IOException {
         this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, new Runnable() {
-            @Override
+            @SuppressWarnings("resource")
+			@Override
             public void run() {
                 try {
                     URL url = new URL("http://report.ibhh.de/logs/send.php?plugin=" + FileSend.this.plugin.getName() + "&ID=" + errorid);

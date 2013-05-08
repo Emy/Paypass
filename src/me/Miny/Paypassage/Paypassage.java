@@ -79,6 +79,7 @@ public class Paypassage extends JavaPlugin {
 			databaseUtility = new DatabaseUtility(this);
 			try {
 				databaseUtility.PrepareDB();
+				databaseUtility.PrepareStatsDB();
 			} catch (SQLException e) {
 				setEnabled(false);
 				e.printStackTrace();
@@ -251,6 +252,7 @@ public class Paypassage extends JavaPlugin {
 								getiConomyHandler().substract(ListofUsers.getList().get(player.getName()).getPrice(), player.getName());
 								getiConomyHandler().addmoney(ListofUsers.getList().get(player.getName()).getPrice(), ListofUsers.getList().get(player.getName()).getOwner());
 								player.teleport(ListofUsers.getList().get(player.getName()).getDestination());
+								getDatabaseUtility().insertNewTeleport(player.getName(), ListofUsers.getList().get(player.getName()));
 								if (ListofUsers.getList().containsKey(player.getName())) {
 									ListofUsers.getList().remove(player.getName());
 								}

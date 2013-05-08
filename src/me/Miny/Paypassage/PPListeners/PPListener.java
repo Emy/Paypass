@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.Miny.Paypassage.Paypassage;
+import me.Miny.Paypassage.Sign.InvalidSignLocationException;
 import me.Miny.Paypassage.Sign.ListofCreations;
 import me.Miny.Paypassage.Sign.ListofUsers;
 import me.Miny.Paypassage.Sign.PPSign;
+import me.Miny.Paypassage.Sign.PPSignStats;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -20,6 +22,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Listener for the Bukkit API
+ * 
  * @author ibhh
  */
 public class PPListener implements org.bukkit.event.Listener {
@@ -33,16 +36,17 @@ public class PPListener implements org.bukkit.event.Listener {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
-	
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerLeft(PlayerQuitEvent e) {
-		if(ListofCreations.getList().containsKey(e.getPlayer().getName())) {
+		if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
 			ListofCreations.getList().remove(e.getPlayer().getName());
 		}
 	}
 
 	/**
 	 * Recieves join events
+	 * 
 	 * @param event
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -110,12 +114,12 @@ public class PPListener implements org.bukkit.event.Listener {
 								return;
 							} else {
 								PPSign sign = plugin.getDatabaseUtility().getSign(event.getBlock().getLocation());
-								if(!event.getPlayer().getName().equals(sign.getOwner())) {
-									if(!plugin.getPermissions().checkpermissions(event.getPlayer(), "Paypassage.admin")) {
+								if (!event.getPlayer().getName().equals(sign.getOwner())) {
+									if (!plugin.getPermissions().checkpermissions(event.getPlayer(), "Paypassage.admin")) {
 										event.setCancelled(true);
 										return;
 									}
-								} 
+								}
 								plugin.getDatabaseUtility().deleteSign(event.getBlock().getLocation());
 								plugin.getLoggerUtility().log(event.getPlayer(), "PP Sign deleted", LoggerUtility.Level.INFO);
 							}
@@ -131,9 +135,6 @@ public class PPListener implements org.bukkit.event.Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInteract(PlayerInteractEvent e) {
-		if(e.getPlayer().isSneaking()) {
-			return;
-		}
 		long time = System.nanoTime();
 		if (e.hasBlock()) {
 			if (BlockTools.isSign(e.getClickedBlock())) {
@@ -148,22 +149,33 @@ public class PPListener implements org.bukkit.event.Listener {
 									plugin.getLoggerUtility().log(event.getPlayer(), "Sign not registered!", LoggerUtility.Level.WARNING);
 									return;
 								} else {
-									PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());
-									if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
-										ListofUsers.getList().remove(event.getPlayer().getName());
-									}
-									ListofUsers.getList().put(event.getPlayer().getName(), sign);
-									plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-
-										@Override
-										public void run() {
-											if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
-												ListofUsers.getList().remove(event.getPlayer().getName());
-												plugin.getLoggerUtility().log(event.getPlayer(), "Teleport canceled!", LoggerUtility.Level.ERROR);
-											}
+									if (event.getPlayer().isSneaking()) {
+										try {
+											PPSignStats stats = plugin.getDatabaseUtility().getSignStatsByID(plugin.getDatabaseUtility().getSignID(event.getClickedBlock().getLocation()));
+											plugin.getLoggerUtility().log(event.getPlayer(), "Teleports: " + stats.getCountOfTeleports(), LoggerUtility.Level.INFO);
+											plugin.getLoggerUtility().log(event.getPlayer(), "Profit: " + stats.getProfit(), LoggerUtility.Level.INFO);
+										} catch (InvalidSignLocationException e) {
+											e.printStackTrace();
 										}
-									}, 20 * 20);
-									plugin.getLoggerUtility().log(event.getPlayer(), String.format(plugin.getConfigHandler().getLanguage_config().getString("interact.sign.notification.confirm"), sign.getPrice()), LoggerUtility.Level.WARNING);
+										return;
+									} else {
+										PPSign sign = plugin.getDatabaseUtility().getSign(event.getClickedBlock().getLocation());
+										if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
+											ListofUsers.getList().remove(event.getPlayer().getName());
+										}
+										ListofUsers.getList().put(event.getPlayer().getName(), sign);
+										plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+
+											@Override
+											public void run() {
+												if (ListofUsers.getList().containsKey(event.getPlayer().getName())) {
+													ListofUsers.getList().remove(event.getPlayer().getName());
+													plugin.getLoggerUtility().log(event.getPlayer(), "Teleport canceled!", LoggerUtility.Level.ERROR);
+												}
+											}
+										}, 20 * 20);
+										plugin.getLoggerUtility().log(event.getPlayer(), String.format(plugin.getConfigHandler().getLanguage_config().getString("interact.sign.notification.confirm"), sign.getPrice()), LoggerUtility.Level.WARNING);
+									}
 								}
 							} catch (SQLException ex) {
 								Logger.getLogger(PPListener.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,7 +184,7 @@ public class PPListener implements org.bukkit.event.Listener {
 					});
 				}
 				if (ListofCreations.getList().containsKey(e.getPlayer().getName())) {
-					if (ListofCreations.getList().get(e.getPlayer().getName()).getSign() == null) {
+					if (ListofCreations.getList().get(e.getPlayer().getName()).getSignLocation() == null) {
 						if (((Sign) e.getClickedBlock().getState()).getLine(0).equalsIgnoreCase("[" + plugin.getConfig().getString("sign_headline") + "]")) {
 							try {
 								if (plugin.getDatabaseUtility().isindb(e.getClickedBlock().getLocation())) {
@@ -182,7 +194,7 @@ public class PPListener implements org.bukkit.event.Listener {
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
-							ListofCreations.getList().get(e.getPlayer().getName()).setSign((Sign) e.getClickedBlock().getState());
+							ListofCreations.getList().get(e.getPlayer().getName()).setSignLocation(e.getClickedBlock().getLocation());
 							plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification2"), LoggerUtility.Level.INFO);
 							plugin.getLoggerUtility().log(e.getPlayer(), plugin.getConfigHandler().getLanguage_config().getString("creation.sign.notification4"), LoggerUtility.Level.INFO);
 						} else {

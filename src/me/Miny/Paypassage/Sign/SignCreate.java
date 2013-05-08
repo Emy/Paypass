@@ -18,7 +18,7 @@ public class SignCreate extends PPSign{
      * @throws InvalidSignCreation if one value is NOT set.
      */
     public void save(final Paypassage plugin) throws InvalidSignCreation {
-        if(super.getSign() == null){
+        if(super.getSignLocation() == null){
             throw new InvalidSignCreation("You must choose a sign");
         }
         if(super.getDestination() == null){
