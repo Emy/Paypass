@@ -145,7 +145,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.name", "create");
 				language_config.addDefault("commands.create.permission", "Paypassage.create");
 				language_config.addDefault("commands.create.description", "Erstellt ein neues Paypassage Schild");
-				language_config.addDefault("commands.create.usage", "/pp create");
+				language_config.addDefault("commands.create.usage", "/pp create [name]");
 				
 				language_config.addDefault("commands.confirm.name", "confirm");
 				language_config.addDefault("commands.confirm.permission", "Paypassage.teleport");
@@ -167,7 +167,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.setprice.name", "setprice");
 				language_config.addDefault("commands.setprice.permission", "Paypassage.create");
 				language_config.addDefault("commands.setprice.description", "Setzt die Kosten des Schildes");
-				language_config.addDefault("commands.setprice.usage", "/pp setprice");
+				language_config.addDefault("commands.setprice.usage", "/pp setprice [price]");
 				
 			} else {
 				language_config.addDefault("permission.error", "we have a problem! You musnt do this!");
@@ -224,7 +224,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.create.name", "create");
 				language_config.addDefault("commands.create.permission", "Paypassage.create");
 				language_config.addDefault("commands.create.description", "Creates a new Paypassage sign");
-				language_config.addDefault("commands.create.usage", "/pp create");
+				language_config.addDefault("commands.create.usage", "/pp create [name]");
 				
 				language_config.addDefault("commands.confirm.name", "confirm");
 				language_config.addDefault("commands.confirm.permission", "Paypassage.teleport");
@@ -245,7 +245,7 @@ public class ConfigurationHandler {
 				language_config.addDefault("commands.setprice.name", "setprice");
 				language_config.addDefault("commands.setprice.permission", "Paypassage.create");
 				language_config.addDefault("commands.setprice.description", "Sets the price of the sign");
-				language_config.addDefault("commands.setprice.usage", "/pp setprice");
+				language_config.addDefault("commands.setprice.usage", "/pp setprice [price]");
 
 			}
 			try {
