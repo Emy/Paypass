@@ -13,7 +13,9 @@ PrefixColor: b
 TextColor: 6
 updateIntervall: 30
 sign_headline: Paypassage
+maxTeleportDistance: 30
+minPrice: 0
 use_MySQL: false
-localhost: 3306/Paypassage
+dbPath: localhost:3306/Paypassage
 dbUser: root
 dbPassword: root

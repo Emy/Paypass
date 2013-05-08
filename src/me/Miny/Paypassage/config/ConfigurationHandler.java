@@ -188,6 +188,8 @@ public class ConfigurationHandler {
 				language_config.addDefault("creation.sign.notification4", "Please go to the destination and do \"/pp setdestination\"");
 				language_config.addDefault("creation.sign.notification5", "Destination set! Please choose the price with /pp setprice [price]");
 				language_config.addDefault("creation.sign.notification6", "You are currently creating a PP sign.");
+				language_config.addDefault("creation.sign.notification7", "Teleport distance to long: ");
+				language_config.addDefault("creation.sign.notification8", "Teleport must cost min: ");
 				
 				language_config.addDefault("creation.sign.notification.cancel", "Canceled creation off a PP sign!");
 				language_config.addDefault("creation.sign.notification.success", "PP sign created.");

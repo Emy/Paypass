@@ -59,9 +59,9 @@ public class Paypassage extends JavaPlugin {
 		}
 		return report;
 	}
-	
+
 	public Help getHelp() {
-		if(help == null) {
+		if (help == null) {
 			help = new Help(this);
 		}
 		return help;
@@ -264,6 +264,17 @@ public class Paypassage extends JavaPlugin {
 						return true;
 					} else if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.setdestination.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.setdestination.permission"))) {
+							if (!ListofCreations.getList().containsKey(player.getName())) {
+								getLoggerUtility().log(player, "Start creating a sign with /pp create [name]", LoggerUtility.Level.ERROR);
+								return true;
+							}
+							double distance = ListofCreations.getList().get(player.getName()).getSignLocation().distance(player.getLocation());
+							if(distance > getConfigHandler().getConfig().getInt("maxTeleportDistance")) {
+								if(!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
+									getLoggerUtility().log(player, getConfigHandler().getConfig().getString("creation.sign.notification7") + distance + " max: " + getConfigHandler().getConfig().getInt("maxTeleportDistance"), me.Miny.Paypassage.logger.LoggerUtility.Level.ERROR);
+									return true;
+								}
+							}
 							ListofCreations.getList().get(player.getName()).setDestination(player.getLocation());
 							getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification5"), LoggerUtility.Level.INFO);
 						}
@@ -309,7 +320,7 @@ public class Paypassage extends JavaPlugin {
 				} else if (args.length == 2) {
 					if (args[0].equalsIgnoreCase(getConfigHandler().getLanguage_config().getString("commands.create.name"))) {
 						if (getPermissions().checkpermissions(player, getConfigHandler().getLanguage_config().getString("commands.create.permission"))) {
-							if(ListofCreations.getList().containsKey(player.getName())) {
+							if (ListofCreations.getList().containsKey(player.getName())) {
 								getLoggerUtility().log(player, getConfigHandler().getLanguage_config().getString("creation.sign.notification6"), LoggerUtility.Level.ERROR);
 								return true;
 							}
@@ -328,6 +339,12 @@ public class Paypassage extends JavaPlugin {
 							if (price < 0) {
 								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
 								return true;
+							}
+							if(price < getConfigHandler().getConfig().getDouble("minPrice")) {
+								if(!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
+									getLoggerUtility().log(player, getConfigHandler().getConfig().getString("creation.sign.notification8") + getConfigHandler().getConfig().getDouble("minPrice"), me.Miny.Paypassage.logger.LoggerUtility.Level.ERROR);
+									return true;
+								}
 							}
 							if (!ListofCreations.getList().containsKey(player.getName())) {
 								getLoggerUtility().log(player, "Start creating a sign with /pp create [name]", LoggerUtility.Level.ERROR);
