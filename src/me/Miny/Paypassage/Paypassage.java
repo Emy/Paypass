@@ -198,6 +198,14 @@ public class Paypassage extends JavaPlugin {
 		getLoggerUtility().log("init update control!", LoggerUtility.Level.DEBUG);
 		getListener();
 		getLoggerUtility().log("init listeners!", LoggerUtility.Level.DEBUG);
+		if (getConfigHandler().getConfig().getBoolean("senderrorreport")) {
+			getLoggerUtility().log("This plugin collects error reports and send them to the developer.", LoggerUtility.Level.INFO);
+			getLoggerUtility().log("To change this, change the value \"senderrorreport\" to false in the config.", LoggerUtility.Level.INFO);
+			if (getConfigHandler().getConfig().getBoolean("senddebugfile")) {
+				getLoggerUtility().log("This plugin collects debugfiles and send them to the developer.", LoggerUtility.Level.INFO);
+				getLoggerUtility().log("To change this, change the value \"senddebugfile\" to false in the config.", LoggerUtility.Level.INFO);
+			}
+		}
 		getLoggerUtility().log("Paypassage enabled in " + ((System.nanoTime() - time) / 1000000) + " ms", LoggerUtility.Level.INFO);
 		setEnabled(true);
 	}
@@ -269,8 +277,8 @@ public class Paypassage extends JavaPlugin {
 								return true;
 							}
 							double distance = ListofCreations.getList().get(player.getName()).getSignLocation().distance(player.getLocation());
-							if(distance > getConfigHandler().getConfig().getInt("maxTeleportDistance")) {
-								if(!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
+							if (distance > getConfigHandler().getConfig().getInt("maxTeleportDistance")) {
+								if (!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
 									getLoggerUtility().log(player, getConfigHandler().getConfig().getString("creation.sign.notification7") + distance + " max: " + getConfigHandler().getConfig().getInt("maxTeleportDistance"), me.Miny.Paypassage.logger.LoggerUtility.Level.ERROR);
 									return true;
 								}
@@ -340,8 +348,8 @@ public class Paypassage extends JavaPlugin {
 								getLoggerUtility().log(player, "Please choose a valid price or 0.", LoggerUtility.Level.ERROR);
 								return true;
 							}
-							if(price < getConfigHandler().getConfig().getDouble("minPrice")) {
-								if(!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
+							if (price < getConfigHandler().getConfig().getDouble("minPrice")) {
+								if (!getPermissions().checkpermissionssilent(player, "Paypassage.admin")) {
 									getLoggerUtility().log(player, getConfigHandler().getConfig().getString("creation.sign.notification8") + getConfigHandler().getConfig().getDouble("minPrice"), me.Miny.Paypassage.logger.LoggerUtility.Level.ERROR);
 									return true;
 								}

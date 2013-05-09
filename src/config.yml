@@ -1,7 +1,7 @@
 language: en
 autodownload: true
 installondownload: false
-internet: true
+updateCheck: true
 senderrorreport: true
 senddebugfile: true
 debug: false

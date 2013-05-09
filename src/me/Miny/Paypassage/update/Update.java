@@ -41,7 +41,7 @@ public class Update {
     
     public void install() {
         try {
-            if (plugin.getConfigHandler().getConfig().getBoolean("internet")) {
+            if (plugin.getConfigHandler().getConfig().getBoolean("updateCheck")) {
                 try {
                     String path = plugin.getDataFolder().getParent();
                     if (download(path)) {
@@ -90,7 +90,7 @@ public class Update {
         plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (plugin.getConfigHandler().getConfig().getBoolean("internet")) {
+                    if (plugin.getConfigHandler().getConfig().getBoolean("updateCheck")) {
                         try {
                             plugin.getLoggerUtility().log("Searching update for Paypassage!", LoggerUtility.Level.DEBUG);
                             newversion = checkUpdate();
@@ -126,7 +126,7 @@ public class Update {
     }
     
 //    private void UpdateAvailable() {
-//        if (plugin.getConfigHandler().getConfig().getBoolean("internet")) {
+//        if (plugin.getConfigHandler().getConfig().getBoolean("")) {
 //            try {
 //                if (checkUpdate() > plugin.getVersion()) {
 //                    updateaviable = true;
@@ -329,7 +329,7 @@ public class Update {
      * @return float: latest recommend build.
      */
     /**
-     * public float getNewVersion(String url) { if (plugin.config.Internet) {
+     * public float getNewVersion(String url) { if (plugin.config.) {
      * float rt2 = 0; String zeile; try { URL myConnection = new URL(url);
      * URLConnection connectMe = myConnection.openConnection();
      *
