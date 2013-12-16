@@ -1,8 +1,10 @@
 package me.Miny.Paypassage;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import me.Miny.Paypassage.Database.DatabaseUtility;
 import me.Miny.Paypassage.PPListeners.PPListener;
 import me.Miny.Paypassage.Permissions.PermissionsUtility;
@@ -15,6 +17,7 @@ import me.Miny.Paypassage.config.ConfigurationHandler;
 import me.Miny.Paypassage.logger.LoggerUtility;
 import me.Miny.Paypassage.update.Update;
 import me.Miny.Paypassage.update.Utilities;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -46,6 +49,10 @@ public class Paypassage extends JavaPlugin {
 
 	public String[] getCommands() {
 		return commands;
+	}
+	
+	public File getPluginFile() {
+	    return getFile();
 	}
 
 	/**

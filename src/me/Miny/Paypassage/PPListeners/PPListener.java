@@ -53,15 +53,6 @@ public class PPListener implements org.bukkit.event.Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		long time = System.nanoTime();
 		try {
-			if (plugin.isEnabled()) {
-				if ((this.plugin.getPermissions().checkpermissionssilent(event.getPlayer(), "Paypassage.admin")) && (plugin.getUpdate().isUpdateaviable())) {
-					this.plugin.getLoggerUtility().log(event.getPlayer(), "installed Paypassage version: " + this.plugin.getVersion() + ", latest version: " + this.plugin.getUpdate().getNewversion(), LoggerUtility.Level.WARNING);
-					this.plugin.getLoggerUtility().log(event.getPlayer(), "New Paypassage update aviable: type \"/Paypassage update\" to install!", LoggerUtility.Level.WARNING);
-					if (!this.plugin.getConfig().getBoolean("installondownload")) {
-						this.plugin.getLoggerUtility().log(event.getPlayer(), "Please edit the config.yml if you wish that the plugin updates itself atomatically!", LoggerUtility.Level.WARNING);
-					}
-				}
-			}
 			final Player player = event.getPlayer();
 			plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
 				@Override
